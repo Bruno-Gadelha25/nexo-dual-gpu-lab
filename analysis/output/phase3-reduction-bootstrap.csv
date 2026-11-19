@@ -1,0 +1,5 @@
+elements,best_parallel_970_share,gtx970_solo_median_ms,best_parallel_median_ms,median_reduction_pct,ci95_low_pct,ci95_high_pct
+1000000,65,3.3732,2.4077,28.6,24.9,29.9
+2000000,60,7.0865,4.2890,39.5,36.7,41.3
+4000000,50,13.2719,6.5856,50.4,48.4,51.2
+8000000,50,21.0071,11.1242,47.0,46.3,54.9

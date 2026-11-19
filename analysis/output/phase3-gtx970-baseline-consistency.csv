@@ -1,0 +1,4 @@
+gtx970_elements,dual_total_elements,share,gtx970_solo_median_ms,gtx970_ms_inside_dual_median,dual_vs_solo_pct
+1000000,2000000,50,3.3732,3.7027,+9.8
+2000000,4000000,50,7.0865,6.5854,-7.1
+4000000,8000000,50,13.2719,10.4852,-21.0
