@@ -13,7 +13,7 @@ Laboratório de pesquisa sobre computação heterogênea com **duas GPUs NVIDIA 
 - **Consolidar** o resultado numa única GPU custou mais do que o ganho em todas as cargas medidas.
 - A auditoria independente ([docs/audit](docs/audit/claude-audit-2026-11-19.md)) e uma sonda física posterior ([Fase 3b](docs/phase3b-probe-report.md)) indicam que esse ganho vem de **dois links PCIe copiando em paralelo**, não de computação: sem a cópia, o dual foi 44% mais lento; em computação pesada, a GTX 750 Ti é cerca de 3 vezes mais lenta.
 
-**Não é** SLI, NVLink, VRAM unificada nem renderização multi-GPU de jogos. **Não há** ganho de FPS demonstrado.
+**Não é** SLI, NVLink, VRAM unificada nem renderização multi-GPU de jogos. **Não há** ganho de FPS: no [teste com Forza Horizon 4](docs/fh4-test-2026-11-19.md), 85 FPS só com a 970 e 86 FPS com as duas placas habilitadas; o jogo usa uma placa e o gargalo é a CPU.
 
 ## Problema de pesquisa
 
