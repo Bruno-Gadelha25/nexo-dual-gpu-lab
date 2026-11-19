@@ -74,12 +74,25 @@ Cada teste fica registrado aqui, inclusive os que falharam ou foram invalidados.
 - **Cuidado descoberto:** os dois monitores são gravados inteiros; janelas pessoais abertas aparecem no vídeo.
 - **Detalhes:** [obs-recording.md](obs-recording.md)
 
+### Teste 11 — Gravar sem atrapalhar as placas (19:41–19:48)
+
+- **O que foi feito:** gravação de teste de ~30 s no OBS (1080p, 30 fps) enquanto o Engine rodava nas duas placas.
+- **Problema:** com a janela do OBS aberta, o Engine com as duas placas ficou **183% mais lento** (72,3 ms contra 25,5 ms). As rodadas ficavam bimodais (~20 ms ou ~54 ms): a diferença de ~34 ms é cerca de um quadro a 30 fps.
+- **Investigação:**
+  - OBS fechado: normal (20,8 ms contra 24,4 ms).
+  - OBS aberto sem capturar o monitor da GTX 750 Ti: ainda 2 rodadas lentas em 6.
+  - **OBS minimizado na bandeja, com as duas capturas ligadas: todas normais (17,5 ms contra 23,8 ms, 26,5% mais rápido).**
+- **Causa:** a prévia ao vivo do OBS era desenhada numa janela no monitor da GTX 750 Ti, disputando a placa com o cálculo. Placas Maxwell revezam mal entre trabalho de tela e cálculo longo.
+- **Correção:** gravar com o OBS minimizado (atalho "NEXO Gravar (OBS)"), controlando por teclas: Ctrl+Alt+R grava, Ctrl+Alt+S para, Ctrl+Alt+1…5 troca a cena. Gravação de 30 fps em vez de 60.
+- **Verificação:** gravando minimizado, o Engine deu **24,1% mais rápido** com validação PASS, e o OBS desenhou 892 quadros em ~30 s, sem atraso de renderização. Os atalhos foram testados (cena, iniciar e parar aparecem no log). Os vídeos de teste foram apagados sem ser abertos.
+
 ## Lições do dia
 
 1. Medir de novo é o que separa o que parece do que é. O "ganho de 50%" era cópia; o ganho real de computação é de 10% a 25%.
 2. Uma placa ~3× mais lenta só ajuda com a divisão certa (~72/28). Dividir 50/50 deixa tudo mais lento.
 3. Jogos não usam duas GPUs sozinhos. O Engine acelera trabalho do próprio NEXO, não jogos.
 4. Clock de GPU varia muito. Sem aquecer a placa antes de medir, o resultado muda de sinal.
+5. Até a ferramenta de gravação interfere na medição. Medir o experimento enquanto ele é filmado exige testar a filmagem também.
 
 ## Próximos testes
 
