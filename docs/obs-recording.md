@@ -10,6 +10,7 @@ Configuração para gravar, num único vídeo, o painel NEXO GPU CONTROL e a tel
   - `2 · Só GTX 750 Ti`
   - `3 · Duas placas`
   - `4 · Forza Horizon 4`
+  - `5 · Forza na GTX 750 Ti`
 - **Montagem:** monitor do painel (LG, na GTX 750 Ti) à esquerda e monitor do jogo (SyncMaster, na GTX 970) à direita, cada um em 960×600; título em cima, legenda do teste embaixo. A captura do monitor da GTX 750 Ti usa o método WGC, que funciona entre placas diferentes.
 - **Áudio:** áudio do PC no dispositivo padrão; microfone mudo.
 - **"Esconder janelas do OBS da captura" ligado:** o OBS não aparece no vídeo.
