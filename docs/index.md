@@ -25,6 +25,7 @@ Os relatórios abaixo são preservados como foram escritos. Correções e ressal
 | [Fase 1 — diagnóstico](phase1-hardware-report.md) | Cita `dxdiag.txt`, que não é versionado (ignorado por privacidade). |
 | [Fase 2 — prova de conceito](phase2-report.md) | 7 links apontam para logs e binários locais não versionados. "Seleciona por LUID" não confere com o código (achado M1). |
 | [Fase 3 — otimização](phase3-report.md) | Números conferem; interpretação revisada (achados C1, H1, H3). Linha 8M da tabela de transferência sem o valor absoluto (36,9987 ms). |
+| [Fase 3b — sonda computação vs. cópia](phase3b-probe-report.md) | Campanha nova (2026-11-19). Sustenta C1 e confirma H2. |
 | [Fase 4B — PCIe](phase4b-pcie-report.md) | Relatório de estado consolidado na auditoria. |
 | [Progresso Fase 4B](progress/phase4b-pcie-progress-2026-11-19.md) | Resumo do operador. |
 | [Progresso GPU Control](progress/nexo-gpu-control-progress-2026-11-19.md) | Resumo do operador. |

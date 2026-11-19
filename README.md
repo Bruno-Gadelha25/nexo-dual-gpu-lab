@@ -1,4 +1,4 @@
-﻿# NEXO DUAL GPU LAB
+# NEXO DUAL GPU LAB
 
 Laboratório de pesquisa sobre computação heterogênea com **duas GPUs NVIDIA diferentes no mesmo PC**, usando Direct3D 12, filas COMPUTE independentes, recursos Cross-Adapter e fences.
 
@@ -11,7 +11,7 @@ Laboratório de pesquisa sobre computação heterogênea com **duas GPUs NVIDIA 
 - Dados foram trocados entre as placas por recursos e fences Cross-Adapter, **nos dois sentidos**, sem divergências.
 - Num workload sintético (gerar N inteiros e copiá-los para a memória do sistema), dividir o trabalho entre as duas GPUs reduziu o tempo mediano em **28,6% a 50,4%**.
 - **Consolidar** o resultado numa única GPU custou mais do que o ganho em todas as cargas medidas.
-- A auditoria independente ([docs/audit](docs/audit/claude-audit-2026-11-19.md)) concluiu que esse ganho provavelmente vem de **dois links PCIe copiando em paralelo**, não de computação. Isso ainda precisa de confirmação com timestamps de GPU.
+- A auditoria independente ([docs/audit](docs/audit/claude-audit-2026-11-19.md)) e uma sonda física posterior ([Fase 3b](docs/phase3b-probe-report.md)) indicam que esse ganho vem de **dois links PCIe copiando em paralelo**, não de computação: sem a cópia, o dual foi 44% mais lento; em computação pesada, a GTX 750 Ti é cerca de 3 vezes mais lenta.
 
 **Não é** SLI, NVLink, VRAM unificada nem renderização multi-GPU de jogos. **Não há** ganho de FPS demonstrado.
 
@@ -57,6 +57,7 @@ Mais diagramas e o fluxo da transferência: [docs/architecture.md](docs/architec
 | 1 — Diagnóstico | Concluída | Inventário DXGI/D3D12/CUDA; abertura de heap Cross-Adapter | [phase1](docs/phase1-hardware-report.md) |
 | 2 — Prova de conceito | Concluída | Compute simultâneo validado; Cross-Adapter bidirecional | [phase2](docs/phase2-report.md) |
 | 3 — Otimização | Concluída | 1.200 + 500 medições; divisões 50/50 a 70/30 | [phase3](docs/phase3-report.md) |
+| 3b — Sonda | Exploratória (2026-11-19) | Computação vs. cópia; link Gen3 x8 | [phase3b](docs/phase3b-probe-report.md) |
 | 4 — Monitoramento passivo | **Em andamento** | Coleta a cada 30 s; dados ainda não importados | [ACTIVE-LOGS](phases/phase4-monitoring/ACTIVE-LOGS.md) |
 | 4B — PCIe | Validação inicial | Counters NVML ainda não confiáveis; nenhum benchmark | [phase4b](docs/phase4b-pcie-report.md) |
 | GPU Control | Interface testada | Grava uma política; **não existe Engine que a consuma** | [gpu-control](docs/gpu-control.md) |
@@ -88,7 +89,8 @@ xychart-beta
 
 **Como ler esses números:**
 
-- O tempo medido inclui gravar comandos, executar o shader **e copiar o resultado para a memória do sistema**. O shader é muito leve. A taxa implícita (1,1 a 1,5 GB/s) é típica de um link PCIe Gen1 x8.
+- O tempo medido inclui gravar comandos, executar o shader **e copiar o resultado para a memória do sistema**. O shader é muito leve. A taxa implícita (1,1 a 1,5 GB/s) é típica de um link PCIe Gen1 x8. A [Fase 3b](docs/phase3b-probe-report.md) confirmou: sem a cópia, não há ganho.
+- Hoje o link está em Gen3 x8 e a GTX 970 sozinha faz 8M + cópia em 6,05 ms (21,0 ms na Fase 3). Os números da tabela valem para o estado Gen1.
 - O IC só mede o ruído dentro de uma sessão. O baseline da GTX 970 variou entre blocos (até 21%), e a ordem das medições não foi aleatória.
 - A soma "paralelo + consolidação" junta medianas de dois experimentos separados.
 - Tudo isso está detalhado em [docs/audit/claude-audit-2026-11-19.md](docs/audit/claude-audit-2026-11-19.md) e em [docs/research-methodology.md](docs/research-methodology.md).

@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 All notable project changes are recorded here. Experimental measurements are append-only evidence; they are never rewritten to make a later version look better.
 
@@ -11,6 +11,7 @@ Branch `feature/claude-repository-audit-2026-11-19`. No benchmark CSV or histori
 - **Added:** `scripts/static-checks.ps1` (SemVer, CSV counts and statistics, Markdown links, credentials, absolute paths, PowerShell syntax, git fsck) and a static-only GitHub Actions workflow.
 - **Added:** documentation set: index, architecture (Mermaid), hardware and environment, research methodology, reproducibility, test matrix, phase status, Phase 4B status report, GPU Control, OBS, glossary, FAQ, English summary, contribution guide.
 - **Changed:** README rewritten as the lab's entry point, with results recomputed from the CSVs; technical overview, roadmap and privacy review updated.
+- **Added:** exploratory Phase 3b probe (`phases/phase3b-probe/`, `data/phase3b-probe/2026-11-19/`, `docs/phase3b-probe-report.md`): without the readback the dual path is 44% slower; the GTX 750 Ti is ~3.06x slower in compute; link now Gen3 x8.
 - **Corrected (interpretation, not data):** Phase 3 timings include the GPU-to-host readback over PCIe; the reported gain is not established as a compute gain. See audit finding C1.
 
 ## [0.1.0-alpha.1] - 2026-11-19

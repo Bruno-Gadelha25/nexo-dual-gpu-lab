@@ -16,6 +16,16 @@
 6. **Privacidade:** nenhuma credencial, hostname ou PID encontrado em nenhum dos 5 commits alcançáveis.
 7. **Veredicto:** pronto para revisão interna como **relatório de laboratório exploratório**. Não está pronto para ser apresentado como evidência de ganho de computação multi-GPU.
 
+## 1b. Atualização após teste físico autorizado (2026-11-19, 18:08–18:09)
+
+O proprietário autorizou testes. Uma sonda curta ([relatório da Fase 3b](../phase3b-probe-report.md)) mediu as duas GPUs com e sem a cópia para a RAM, em ordem aleatória:
+
+- **C1 sustentado.** Sem a cópia, o dual foi 44% **mais lento** que a GTX 970 sozinha no kernel leve; com a cópia, 23% mais rápido. O ganho vem das cópias em paralelo.
+- **A GTX 750 Ti é ~3,06× mais lenta em computação** (1.024 iterações: 183,4 ms contra 60,0 ms). Em computação pesada, 50/50 deixa o dual 53% mais lento.
+- **H2 confirmado.** Link em Gen3 x8 em 305 amostras; a GTX 970 sozinha com 8M + cópia levou 6,05 ms, contra 21,0 ms na Fase 3. A Fase 3 não se reproduz no estado atual da máquina.
+- **Compilação** dos fontes das Fases 2 e 3: PASS (MSVC 19.51.36260, `/W4`).
+- Limitação: os timestamps de GPU deste driver não isolaram a cópia; as conclusões usam o tempo do host.
+
 ## 2. Tabela de severidade
 
 | ID | Sev. | Título curto | Onde |
@@ -185,7 +195,9 @@
 
 **Executados (sem GPU):** recontagem e recálculo dos CSVs (`analysis/reanalyze_phase3.py`, `scripts/static-checks.ps1`): PASS. Verificação de links relativos: PASS fora dos relatórios históricos; 7 links quebrados no relatório histórico da Fase 2 (aviso). Busca de credenciais e caminhos absolutos no histórico: sem achados reais. Parser do PowerShell em todos os `.ps1` versionados: PASS. `git fsck`: PASS. Reprodução isolada do erro `+=` do coletor 4B com objetos simulados.
 
-**Não executados:** compilação C++/HLSL (o validador do projeto tem `-Compile`, não rodei); qualquer execução em GPU; benchmarks; coletor 4B real; self-test do GPU Control; OBS. CI no GitHub Actions roda só verificações estáticas e não valida Multi-GPU.
+**Executados depois, com autorização:** compilação das Fases 2 e 3 (PASS) e a sonda física da Fase 3b (156 execuções, 60/60 validações PASS).
+
+**Não executados:** benchmarks completos; coletor 4B real; self-test do GPU Control; OBS. CI no GitHub Actions roda só verificações estáticas e não valida Multi-GPU.
 
 ## 8. Veredicto de prontidão acadêmica
 
