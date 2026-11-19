@@ -1,0 +1,16 @@
+﻿CPU E MEMÓRIA — coleta somente leitura
+Data: 2026-11-19 (hora local do sistema)
+
+Sistema operacional: Windows 11 Pro 64 bits, build reportado pelo CIM 26200.
+Placa-mãe conforme SMBIOS: Gigabyte Technology Co., Ltd.; produto Z77X-UP5 TH-CF. Campo Version='x.x' e serial='To be filled by O.E.M.'; revisão física não confirmada. BIOS reportada AMI F12, 2014-05-14; não foi alterada.
+
+CPU: Intel Core i7-3770K @ 3.50 GHz; 4 núcleos / 8 processadores lógicos; CPUID signature 000306A9; frequência máxima reportada pelo CIM 3901 MHz.
+CPUID local executado em x64:
+- SSE3, SSSE3, SSE4.1, SSE4.2: presentes.
+- AVX: presente; XSAVE e OSXSAVE presentes; FMA e F16C presentes conforme CPUID leaf 1.
+- BMI1, AVX2, BMI2, AVX-512F: ausentes conforme CPUID leaf 7 EBX.
+O teste apenas consultou CPUID; não executou instruções AVX2/FMA/BMI2.
+
+RAM física reportada: 34,318,626,816 bytes (~32 GiB). Quatro DIMMs Corsair, part number CMP32GX3M4X1600C10, 8 GiB cada; 1600 MT/s configurados, distribuídos em Channel A DIMM0/DIMM1 e Channel B DIMM0/DIMM1 segundo WMI. WMI indica dual channel pela topologia das etiquetas, mas não mediu largura de banda.
+
+CPU e placa: Intel ARK declara PCI Express 3.0, até 1x16, 2x8 ou 1x8 + 2x4 para o i7-3770K. A documentação GIGABYTE do GA-Z77X-UP5 TH Rev. 1.0 declara 4 slots DDR3 até 32 GB e as mesmas opções de pistas (slot PCIEX16 principal, PCIEX8 divide pistas; com PCIEX4 populado, x8+x4 nos dois primeiros). SMBIOS identifica a família, mas não confirma revisão física.

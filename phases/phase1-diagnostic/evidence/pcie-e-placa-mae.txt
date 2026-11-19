@@ -1,0 +1,21 @@
+﻿PCI EXPRESS E PLACA-MÃE — coleta somente leitura
+
+Identificação SMBIOS: Gigabyte Technology Co., Ltd., produto Z77X-UP5 TH-CF; versão SMBIOS x.x. Modelo comercial muito provavelmente GA-Z77X-UP5 TH; revisão física NÃO CONFIRMADA. Chipset Z77 indicado pela especificação oficial desse modelo.
+
+GPU GTX 970 (PCI bus 1, device 0, function 0):
+- PnP parent/root port: Intel VEN_8086 DEV_0151, caminho LocationPath PCIROOT(0)#PCI(0100)#PCI(0000), ACPI PEG0.
+- PnP DEVPKEY_PciDevice: velocidade atual 1; largura atual x8; velocidade máxima do endpoint 3; largura máxima do endpoint x16.
+- nvidia-smi: link atual Gen1 x8; gen.max=1, gpumax=3, hostmax=1; width.max=x16.
+
+GPU GTX 750 Ti (PCI bus 2, device 0, function 0):
+- PnP parent/root port: Intel VEN_8086 DEV_0155, caminho PCIROOT(0)#PCI(0101)#PCI(0000), ACPI PEG1.
+- PnP: velocidade atual 1; largura atual x8; velocidade máxima do endpoint 3; largura máxima x16.
+- nvidia-smi: link atual Gen1 x8; gen.max=1, gpumax=3, hostmax=1; width.max=x16.
+
+Interpretação e divergência:
+- O link NEGOCIADO/ATUAL foi observado em Gen1 x8 para ambas as placas naquele momento. Não confundir com capacidade máxima.
+- O PnP informa máximo de endpoint Gen3 x16, enquanto nvidia-smi informa GPU max Gen3, mas hostmax/gen.max 1. A especificação da CPU e da placa-mãe declara PCIe 3.0 e modos x16, x8/x8 ou x8+x4+x4. As ferramentas discordam sobre máximo do host; portanto, máximo negociado efetivo da plataforma e motivo do Gen1 atual NÃO CONFIRMADOS. Não se alterou BIOS/energia nem se provocou carga para reavaliar o estado do link.
+- Topologia PEG0/PEG1 aponta dois caminhos PCIe separados, mas o mapeamento desses caminhos para os rótulos físicos dos slots da placa não pôde ser confirmado por software. Não se afirma qual placa está no slot físico PCIEX16 ou PCIEX8.
+- Limites teóricos conforme manual da placa: primeiro slot até x16; ao ocupar PCIEX8, primeiro slot passa a até x8; se PCIEX4 também ocupado (disponível com Ivy Bridge), o primeiro fica até x8 e PCIEX8 até x4. O i7-3770K aceita até 2x8 ou x8+2x4. Nada disso substitui o estado observado Gen1 x8.
+
+Não se usou teste de carga; nenhuma alteração de hardware ou configuração foi feita.

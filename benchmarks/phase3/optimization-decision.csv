@@ -1,0 +1,5 @@
+﻿"Elements","GTX970SoloMedianMs","GTX750SoloMedianMs","BestParallelRatio970Percent","BestParallelMedianMs","BestParallelP95Ms","BestSequentialRatio970Percent","BestSequentialMedianMs","MeasuredIdealShareFromSoloRates","FinalOnlyTransferMedianMs","ParallelPlusFinalTransferMs","OutperformsGTX970ComputeOnly","OutperformsGTX970IncludingFinalTransfer"
+"1000000","3.3732","5.1788","65","2.4077","2.8955","65","4.4782","60.55659494855","2.5894","4.9971","True","False"
+"2000000","7.0864","9.8419","60","4.289","4.6048","70","8.1343","58.1387380894715","5.5136","9.8026","True","False"
+"4000000","13.2718","11.2396","50","6.5856","7.4327","50","12.4654","45.8545819496234","13.1274","19.713","True","False"
+"8000000","21.0072","21.8057","50","11.1242","11.1766","70","21.2527","50.9325460316867","25.8745","36.9987","True","False"

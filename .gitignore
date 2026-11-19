@@ -1,0 +1,40 @@
+﻿# Private configuration and credentials
+.env
+.env.*
+!.env.example
+**/*secret*
+**/*credential*
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Machine-specific/raw evidence; retain locally, do not commit
+/phases/phase1-diagnostic/evidence/dxdiag.txt
+/phases/phase1-diagnostic/artifacts/
+/phases/phase2-prototype/artifacts/
+/phases/phase2-prototype/raw-logs/
+/phases/phase3-optimization/artifacts/
+/phases/phase3-optimization/raw-logs/
+/phases/phase4-monitoring/reference-docs/monitoring-summary-snapshot.md
+/phases/phase4-monitoring/reference-docs/phase4-report-snapshot.md
+/phases/phase4-monitoring/live-data/
+
+# Runtime state and stop markers
+**/monitor.pid
+**/STOP
+**/STOP.*
+
+# Generated build outputs
+*.exe
+*.dll
+*.obj
+*.pdb
+*.ilk
+*.cso
+
+# Editors and operating system
+.vs/
+.vscode/
+.DS_Store
+Thumbs.db

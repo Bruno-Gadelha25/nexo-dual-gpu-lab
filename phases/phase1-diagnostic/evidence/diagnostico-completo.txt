@@ -1,0 +1,148 @@
+﻿NEXO DUAL GPU — DIAGNÓSTICO COMPLETO
+Data da coleta: 2026-11-19
+--- INVENTÁRIO CPU E MEMÓRIA ---
+CPU E MEMÓRIA — coleta somente leitura
+Data: 2026-11-19 (hora local do sistema)
+
+Sistema operacional: Windows 11 Pro 64 bits, build reportado pelo CIM 26200.
+Placa-mãe conforme SMBIOS: Gigabyte Technology Co., Ltd.; produto Z77X-UP5 TH-CF. Campo Version='x.x' e serial='To be filled by O.E.M.'; revisão física não confirmada. BIOS reportada AMI F12, 2014-05-14; não foi alterada.
+
+CPU: Intel Core i7-3770K @ 3.50 GHz; 4 núcleos / 8 processadores lógicos; CPUID signature 000306A9; frequência máxima reportada pelo CIM 3901 MHz.
+CPUID local executado em x64:
+- SSE3, SSSE3, SSE4.1, SSE4.2: presentes.
+- AVX: presente; XSAVE e OSXSAVE presentes; FMA e F16C presentes conforme CPUID leaf 1.
+- BMI1, AVX2, BMI2, AVX-512F: ausentes conforme CPUID leaf 7 EBX.
+O teste apenas consultou CPUID; não executou instruções AVX2/FMA/BMI2.
+
+RAM física reportada: 34,318,626,816 bytes (~32 GiB). Quatro DIMMs Corsair, part number CMP32GX3M4X1600C10, 8 GiB cada; 1600 MT/s configurados, distribuídos em Channel A DIMM0/DIMM1 e Channel B DIMM0/DIMM1 segundo WMI. WMI indica dual channel pela topologia das etiquetas, mas não mediu largura de banda.
+
+CPU e placa: Intel ARK declara PCI Express 3.0, até 1x16, 2x8 ou 1x8 + 2x4 para o i7-3770K. A documentação GIGABYTE do GA-Z77X-UP5 TH Rev. 1.0 declara 4 slots DDR3 até 32 GB e as mesmas opções de pistas (slot PCIEX16 principal, PCIEX8 divide pistas; com PCIEX4 populado, x8+x4 nos dois primeiros). SMBIOS identifica a família, mas não confirma revisão física.
+
+--- PLACA-MÃE E PCIe ---
+PCI EXPRESS E PLACA-MÃE — coleta somente leitura
+
+Identificação SMBIOS: Gigabyte Technology Co., Ltd., produto Z77X-UP5 TH-CF; versão SMBIOS x.x. Modelo comercial muito provavelmente GA-Z77X-UP5 TH; revisão física NÃO CONFIRMADA. Chipset Z77 indicado pela especificação oficial desse modelo.
+
+GPU GTX 970 (PCI bus 1, device 0, function 0):
+- PnP parent/root port: Intel VEN_8086 DEV_0151, caminho LocationPath PCIROOT(0)#PCI(0100)#PCI(0000), ACPI PEG0.
+- PnP DEVPKEY_PciDevice: velocidade atual 1; largura atual x8; velocidade máxima do endpoint 3; largura máxima do endpoint x16.
+- nvidia-smi: link atual Gen1 x8; gen.max=1, gpumax=3, hostmax=1; width.max=x16.
+
+GPU GTX 750 Ti (PCI bus 2, device 0, function 0):
+- PnP parent/root port: Intel VEN_8086 DEV_0155, caminho PCIROOT(0)#PCI(0101)#PCI(0000), ACPI PEG1.
+- PnP: velocidade atual 1; largura atual x8; velocidade máxima do endpoint 3; largura máxima x16.
+- nvidia-smi: link atual Gen1 x8; gen.max=1, gpumax=3, hostmax=1; width.max=x16.
+
+Interpretação e divergência:
+- O link NEGOCIADO/ATUAL foi observado em Gen1 x8 para ambas as placas naquele momento. Não confundir com capacidade máxima.
+- O PnP informa máximo de endpoint Gen3 x16, enquanto nvidia-smi informa GPU max Gen3, mas hostmax/gen.max 1. A especificação da CPU e da placa-mãe declara PCIe 3.0 e modos x16, x8/x8 ou x8+x4+x4. As ferramentas discordam sobre máximo do host; portanto, máximo negociado efetivo da plataforma e motivo do Gen1 atual NÃO CONFIRMADOS. Não se alterou BIOS/energia nem se provocou carga para reavaliar o estado do link.
+- Topologia PEG0/PEG1 aponta dois caminhos PCIe separados, mas o mapeamento desses caminhos para os rótulos físicos dos slots da placa não pôde ser confirmado por software. Não se afirma qual placa está no slot físico PCIEX16 ou PCIEX8.
+- Limites teóricos conforme manual da placa: primeiro slot até x16; ao ocupar PCIEX8, primeiro slot passa a até x8; se PCIEX4 também ocupado (disponível com Ivy Bridge), o primeiro fica até x8 e PCIEX8 até x4. O i7-3770K aceita até 2x8 ou x8+2x4. Nada disso substitui o estado observado Gen1 x8.
+
+Não se usou teste de carga; nenhuma alteração de hardware ou configuração foi feita.
+
+--- NVIDIA E CUDA ---
+NVIDIA E CUDA — coleta somente leitura
+Driver NVIDIA: 582.78 (NVSMI); versão WMI 32.0.15.8278. Modo WDDM; ambas as GPUs detectadas pelo Windows e NVSMI.
+
+NVSMI (amostra no momento da coleta):
+GPU 0 GTX 970, PCI BDF 00000000:01:00.0, Device ID 0x13C210DE, Subsystem 0x85081043, VRAM 4096 MiB total / 2889 MiB livre, compute capability 5.2, link atual Gen1 x8.
+GPU 1 GTX 750 Ti, PCI BDF 00000000:02:00.0, Device ID 0x138010DE, Subsystem 0x105F10DE, VRAM 4096 MiB total / 3615 MiB livre, compute capability 5.0, link atual Gen1 x8.
+IDs PnP completos: GTX970 VEN_10DE DEV_13C2 SUBSYS_85081043 REV_A1; GTX750Ti VEN_10DE DEV_1380 SUBSYS_105F10DE REV_A2. WMI reporta AdapterRAM 4,293,918,720 bytes nas duas (campo aproximado/legado); NVSMI confirma 4096 MiB em ambas. DXDiag reporta memória dedicada disponível ao sistema 4030 MB / 4044 MB e 16364 MB compartilhada em cada uma; DXGI reporta alocações dedicadas ~4.23 GB e memória de sistema compartilhada ~17.16 GB. Os campos representam métricas e unidades diferentes e a memória compartilhada não é VRAM adicional equivalente.
+
+Arquitetura: Maxwell (GTX970 GM204, compute 5.2; GTX750 Ti GM107, compute 5.0 conforme NVSMI). As duas GPUs são dispositivos CUDA distintos e permanecem enumeráveis ao mesmo tempo.
+Teste CUDA: foi compilado teste C++ pequeno que carrega nvcuda.dll do driver (já presente), chama cuInit(0), cuDeviceGetCount e consultas de nome, compute capability e memória. Resultado: cuInit=0; contagem=2; GPU0 GTX970 5.2 / 4095 MiB; GPU1 GTX750 Ti 5.0 / 4095 MiB. Nenhum kernel foi executado.
+
+Toolkit/runtime:
+- nvcuda.dll existe em C:\Windows\System32; isso é a API de driver CUDA fornecida pelo driver NVIDIA.
+- nvcc e diretório padrão NVIDIA GPU Computing Toolkit\CUDA não encontrados; CUDA_PATH vazio. Não foi identificado CUDA Toolkit instalável/local para compilar kernels.
+- nvidia-smi informa “CUDA Version 13.0”: versão máxima da interface CUDA compatível com o driver, não prova presença de Toolkit 13 nem de cudart.
+- Python Torch instalado é CPU-only (torch.version.cuda=None, torch.cuda.is_available=False); portanto não é um caminho CUDA funcional nesta instalação.
+- NVIDIA documenta geração de código nativo Maxwell para compute 5.0 desde CUDA Toolkit 6.0 e para 5.2 desde Toolkit 6.5. O suporte atual de versões precisa ser escolhido com base nas release notes/toolchain efetivamente instalada; CUDA 13.0 Update 1 removeu suporte a Maxwell em certos componentes/targets (a nota de release é específica, não prova que toda API CUDA 13 foi removida). Sem toolkit instalado, versão de compilação compatível não foi testada.
+
+SLI/NVLink/memória unificada: não detectados nem presumidos. A enumeração CUDA simultânea não agrega VRAM nem divide automaticamente o trabalho.
+
+--- DXGI / D3D12 (saída literal do teste) ---
+DXGI/D3D12 diagnostic; no rendering, kernels, or benchmark.
+  CreateDXGIFactory2                            HRESULT=0x00000000 OK
+
+Adapter 0: NVIDIA GeForce GTX 970
+ VendorId=10DE DeviceId=13C2 SubSys=85081043 Revision=161
+ DedicatedVideoMemory=4226416640 SharedSystemMemory=17159313408 Flags=0x0 LUID=00000000:0000E8C1
+
+Adapter 1: NVIDIA GeForce GTX 750 Ti
+ VendorId=10DE DeviceId=1380 SubSys=105F10DE Revision=162
+ DedicatedVideoMemory=4241424384 SharedSystemMemory=17159313408 Flags=0x0 LUID=00000000:0000FA29
+
+Adapter 2: Microsoft Basic Render Driver
+ VendorId=1414 DeviceId=008C SubSys=00000000 Revision=0
+ DedicatedVideoMemory=0 SharedSystemMemory=17159313408 Flags=0x2 LUID=00000000:0000F965
+
+D3D12 adapter 0 NVIDIA GeForce GTX 970
+  D3D12CreateDevice(min FL11_0)                 HRESULT=0x00000000 OK
+  Query max feature level                       HRESULT=0x00000000 OK
+  Max feature level: 12_1
+  Highest supported shader model enum: 0x68
+  Query shader model descending                 HRESULT=0x00000000 OK
+  Query D3D12_OPTIONS                           HRESULT=0x00000000 OK
+  ResourceBindingTier=3 ResourceHeapTier=1 CrossNodeSharingTier=0
+  NodeCount=1
+  Create DIRECT command queue                   HRESULT=0x00000000 OK
+  Create COMPUTE command queue                  HRESULT=0x00000000 OK
+  Create COPY command queue                     HRESULT=0x00000000 OK
+
+D3D12 adapter 1 NVIDIA GeForce GTX 750 Ti
+  D3D12CreateDevice(min FL11_0)                 HRESULT=0x00000000 OK
+  Query max feature level                       HRESULT=0x00000000 OK
+  Max feature level: 11_0
+  Highest supported shader model enum: 0x68
+  Query shader model descending                 HRESULT=0x00000000 OK
+  Query D3D12_OPTIONS                           HRESULT=0x00000000 OK
+  ResourceBindingTier=3 ResourceHeapTier=1 CrossNodeSharingTier=0
+  NodeCount=1
+  Create DIRECT command queue                   HRESULT=0x00000000 OK
+  Create COMPUTE command queue                  HRESULT=0x00000000 OK
+  Create COPY command queue                     HRESULT=0x00000000 OK
+
+D3D12 adapter 2 Microsoft Basic Render Driver
+  D3D12CreateDevice(min FL11_0)                 HRESULT=0x00000000 OK
+  Query max feature level                       HRESULT=0x00000000 OK
+  Max feature level: 12_1
+  Highest supported shader model enum: 0x68
+  Query shader model descending                 HRESULT=0x00000000 OK
+  Query D3D12_OPTIONS                           HRESULT=0x00000000 OK
+  ResourceBindingTier=3 ResourceHeapTier=2 CrossNodeSharingTier=0
+  NodeCount=1
+  Create DIRECT command queue                   HRESULT=0x00000000 OK
+  Create COMPUTE command queue                  HRESULT=0x00000000 OK
+  Create COPY command queue                     HRESULT=0x00000000 OK
+  Cross-adapter probe NVIDIA GeForce GTX 970 -> NVIDIA GeForce GTX 750 Ti
+  Create cross-adapter heap                     HRESULT=0x00000000 OK
+  CreatePlacedResource cross-adapter row-major texture HRESULT=0x00000000 OK
+  CreateSharedHandle heap                       HRESULT=0x00000000 OK
+  OpenSharedHandle heap on peer GPU             HRESULT=0x00000000 OK
+  CreatePlacedResource on peer heap             HRESULT=0x00000000 OK
+  Cross-adapter probe NVIDIA GeForce GTX 750 Ti -> NVIDIA GeForce GTX 970
+  Create cross-adapter heap                     HRESULT=0x00000000 OK
+  CreatePlacedResource cross-adapter row-major texture HRESULT=0x00000000 OK
+  CreateSharedHandle heap                       HRESULT=0x00000000 OK
+  OpenSharedHandle heap on peer GPU             HRESULT=0x00000000 OK
+  CreatePlacedResource on peer heap             HRESULT=0x00000000 OK
+
+--- CUDA DRIVER API (saída literal) ---
+cuInit(0)=0
+cuDeviceGetCount=2 result=0
+GPU 0 handle=0 name=NVIDIA GeForce GTX 970 compute=5.2 memory=4095 MiB [results 0,0,0,0]
+GPU 1 handle=1 name=NVIDIA GeForce GTX 750 Ti compute=5.0 memory=4095 MiB [results 0,0,0,0]
+
+--- CPUID (saída literal) ---
+CPUID vendor=GenuineIntel maxleaf=13
+Leaf1 ECX: SSE3=1 SSSE3=1 FMA=0 SSE4.1=1 SSE4.2=1 XSAVE=1 OSXSAVE=1 AVX=1 F16C=1
+Leaf7 EBX: BMI1=0 AVX2=0 BMI2=0 AVX512F=0
+
+--- ARQUIVOS DE DIAGNÓSTICO GERADOS ---
+gpus-dxgi-d3d12.cpp / .exe
+cuda-driver-enum.cpp / .exe
+cpu-cpuid.cpp / .exe
+dxdiag.txt
+relatorio-hardware.md

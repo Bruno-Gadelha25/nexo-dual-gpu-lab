@@ -1,0 +1,22 @@
+﻿param([ValidateSet('preflight','full')][string]$Mode='full')
+$ErrorActionPreference='Stop';$root=$PSScriptRoot;$log=Join-Path $root 'logs'
+$stdout=Join-Path $log "$Mode.stdout.txt";$stderr=Join-Path $log "$Mode.stderr.txt";$telemetry=Join-Path $log "$Mode-telemetry.csv";$raw=Join-Path $log "$Mode-nvidia-raw.csv";$summary=Join-Path $log "$Mode-execution.txt";$stop=Join-Path $log 'thermal-stop.flag'
+Remove-Item -LiteralPath @($stdout,$stderr,$telemetry,$raw,$summary,$stop) -Force -ErrorAction SilentlyContinue
+'Timestamp,CpuTotalPercent,SystemRamUsedMiB,ProcessWorkingSetMiB,GPU0Name,GPU0TempC,GPU0GraphicsMHz,GPU0MemoryMHz,GPU0UtilPercent,GPU0MemoryUsedMiB,GPU0PowerW,GPU0PcieGen,GPU0PcieWidth,GPU1Name,GPU1TempC,GPU1GraphicsMHz,GPU1MemoryMHz,GPU1UtilPercent,GPU1MemoryUsedMiB,GPU1PowerW,GPU1PcieGen,GPU1PcieWidth'|Set-Content -LiteralPath $telemetry -Encoding UTF8
+$fields='name,temperature.gpu,clocks.current.graphics,clocks.current.memory,utilization.gpu,memory.used,memory.total,power.draw,pcie.link.gen.current,pcie.link.width.current'
+"MODE=$Mode"|Set-Content -LiteralPath $summary;"Thermal guard: graceful stop request at >=75 C or >=3700 MiB per GPU; no clocks/limits altered."|Add-Content -LiteralPath $summary;"PRE-RUN $(Get-Date -Format o)"|Add-Content -LiteralPath $summary;nvidia-smi --query-gpu=$fields --format=csv|Add-Content -LiteralPath $summary
+$smi=Start-Process -FilePath 'C:\Windows\System32\nvidia-smi.exe' -ArgumentList @("--query-gpu=$fields",'--format=csv,noheader,nounits','--loop=1') -PassThru -RedirectStandardOutput $raw -RedirectStandardError (Join-Path $log "$Mode-nvidia-stderr.txt")
+$args=@($root);if($Mode -eq 'preflight'){$args+= '--preflight'};$proc=$null;$samples=0;$guard=$false
+try{$proc=Start-Process -FilePath (Join-Path $root 'nexo_dual_gpu.exe') -ArgumentList $args -WorkingDirectory $root -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+while(-not $proc.HasExited){$now=Get-Date -Format o;$rawTail=@(Get-Content -LiteralPath $raw -Tail 4 -ErrorAction SilentlyContinue);$g=@();foreach($line in $rawTail){$cells=@($line.Split(',')|ForEach-Object{$_.Trim()});if($cells.Count -ge 10){$g+= ,$cells}}
+  $os=Get-CimInstance Win32_OperatingSystem;$cpu=Get-CimInstance Win32_PerfFormattedData_PerfOS_Processor -Filter "Name='_Total'" -ErrorAction SilentlyContinue;$pp=Get-Process -Id $proc.Id -ErrorAction SilentlyContinue;$ws=if($pp){[math]::Round($pp.WorkingSet64/1MB,1)}else{0};$ram=[math]::Round(($os.TotalVisibleMemorySize-$os.FreePhysicalMemory)/1024,1);$cp=if($cpu){$cpu.PercentProcessorTime}else{'NA'}
+  if($g.Count -ge 2){$a=$g[$g.Count-2];$b=$g[$g.Count-1];$row=[pscustomobject]@{Timestamp=$now;CpuTotalPercent=$cp;SystemRamUsedMiB=$ram;ProcessWorkingSetMiB=$ws;GPU0Name=$a[0];GPU0TempC=$a[1];GPU0GraphicsMHz=$a[2];GPU0MemoryMHz=$a[3];GPU0UtilPercent=$a[4];GPU0MemoryUsedMiB=$a[5];GPU0PowerW=$a[7];GPU0PcieGen=$a[8];GPU0PcieWidth=$a[9];GPU1Name=$b[0];GPU1TempC=$b[1];GPU1GraphicsMHz=$b[2];GPU1MemoryMHz=$b[3];GPU1UtilPercent=$b[4];GPU1MemoryUsedMiB=$b[5];GPU1PowerW=$b[7];GPU1PcieGen=$b[8];GPU1PcieWidth=$b[9]};$row|ConvertTo-Csv -NoTypeInformation|Select-Object -Skip 1|Add-Content -LiteralPath $telemetry
+   foreach($gpu in @($a,$b)){$temp=[double]$gpu[1];$used=[double]$gpu[5];if($temp -ge 75 -or $used -ge 3700){$guard=$true;"GUARD at $now $($gpu[0]) temp=${temp}C memory=${used}MiB"|Add-Content -LiteralPath $summary;New-Item -ItemType File -Path $stop -Force|Out-Null}}
+  };$samples++;if($guard){Start-Sleep -Milliseconds 500}else{Start-Sleep -Seconds 2};$proc.Refresh()
+}
+$proc.WaitForExit();$proc.Refresh()
+}finally{if($smi -and -not $smi.HasExited){Stop-Process -Id $smi.Id -Force -ErrorAction SilentlyContinue}}
+"SAMPLES=$samples"|Add-Content -LiteralPath $summary;"POST-RUN $(Get-Date -Format o)"|Add-Content -LiteralPath $summary;nvidia-smi --query-gpu=$fields --format=csv|Add-Content -LiteralPath $summary
+Get-Content -LiteralPath $stdout;if(Test-Path $stderr){Get-Content -LiteralPath $stderr};Get-Content -LiteralPath $summary
+$outlines=Get-Content -LiteralPath $stdout -ErrorAction SilentlyContinue;$pass=if($Mode -eq 'preflight'){$outlines -contains 'PREFLIGHT_RESULT=PASS'}else{$outlines -contains 'SUITE_RESULT=PASS'}
+if(-not $pass -and -not $guard){throw "Run did not reach expected PASS marker; inspect $stdout and $stderr"};if($guard){Write-Warning 'Stopped gracefully at thermal/memory guard; partial results only.'}
