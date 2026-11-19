@@ -8,7 +8,8 @@ All notable project changes are recorded here. Experimental measurements are app
 
 - **Added:** NEXO GPU ENGINE v0.1.0 (`phases/gpu-engine/`): consumes the GPU Control policy, calibrates each GPU, splits the NEXO job proportionally (~72/28), compares with the primary GPU alone (ABBA with untimed pre-roll) and validates every element. Valid sessions: 10.3–23.7% faster than the GTX 970 alone.
 - **Added:** NEXO GPU CONTROL v2.0: two-channel panel with every nvidia-smi metric, 60 s overlaid usage history, and a button that runs the Engine.
-- **Added:** experiment log (`docs/experiment-log.md`) with Tests 1–9, including the invalid run with the game open.
+- **Added:** OBS recording setup (`docs/obs-recording.md`, `tools/obs/make_obs_nexo.py`): two-monitor 1920x1080 layout, four labelled scenes, OBS hidden from capture; GPU Control v2.1 opens on the secondary monitor and its Engine button works for any policy.
+- **Added:** experiment log (`docs/experiment-log.md`) with Tests 1–10, including the invalid run with the game open.
 
 ### Audit branch
 

@@ -92,6 +92,13 @@ $form = New-Object Windows.Forms.Form
 $form.Text = 'NEXO GPU CONTROL'; $form.StartPosition = 'CenterScreen'
 $form.ClientSize = New-Object Drawing.Size(1140, 800); $form.MinimumSize = New-Object Drawing.Size(1156, 839)
 $form.BackColor = $C.Bg; $form.ForeColor = $C.Text; $form.Font = $F.Body
+# Abre no monitor secundário (no laboratório, o monitor ligado na GTX 750 Ti), deixando o principal para o jogo.
+$second = [Windows.Forms.Screen]::AllScreens | Where-Object { -not $_.Primary } | Select-Object -First 1
+if ($second) {
+    $form.StartPosition = 'Manual'
+    $wa = $second.WorkingArea
+    $form.Location = New-Object Drawing.Point(($wa.X + [math]::Max(0, [int](($wa.Width - $form.Width) / 2))), ($wa.Y + [math]::Max(0, [int](($wa.Height - $form.Height) / 2))))
+}
 $icon = Join-Path $script:AppRoot 'nexo-gpu-control.ico'
 if (Test-Path $icon) { try { $form.Icon = New-Object Drawing.Icon($icon) } catch {} }
 
@@ -111,7 +118,7 @@ function New-Btn([string]$Text, [int]$X, [int]$Y, [int]$W, [int]$H, $Parent = $f
 # Cabeçalho
 [void](New-Lbl 'NEXO GPU CONTROL' $F.Title $C.Text 24 16 360 36)
 $engineLabel = New-Lbl 'Engine: procurando…' $F.Body $C.Muted 26 54 640 22
-$runBtn = New-Btn 'Executar job nas duas placas' 856 18 260 50
+$runBtn = New-Btn 'Executar job do Engine' 856 18 260 50
 $runBtn.BackColor = $C.Active; $runBtn.FlatAppearance.BorderColor = $C.Ch1
 
 # Faixa de histórico (o destaque)
@@ -273,7 +280,7 @@ function Update-EngineLabel {
             if ($s.lastRun) {
                 $lr = $s.lastRun; $parts = @($s.plan | ForEach-Object { "$($_.key) $([math]::Round($_.share * 100))%" }) -join ' + '
                 $cmp = if ($null -ne $lr.primaryAloneMedianMs) { " · principal sozinha $([math]::Round($lr.primaryAloneMedianMs, 2)) ms · $(if ($lr.reductionVsPrimaryPct -ge 0) { "$([math]::Round($lr.reductionVsPrimaryPct, 1))% mais rápido" } else { "$([math]::Round(-$lr.reductionVsPrimaryPct, 1))% mais lento" })" } else { '' }
-                $jobLabel.Text = "Último job: $parts · distribuído $([math]::Round($lr.distributedMedianMs, 2)) ms$cmp · validação $($lr.validation)"
+                $jobLabel.Text = "Último job: $parts · tempo do job $([math]::Round($lr.distributedMedianMs, 2)) ms$cmp · validação $($lr.validation)"
                 $jobLabel.ForeColor = $C.Text
             }
         } catch { $engineLabel.Text = "Status do Engine ilegível: $($_.Exception.Message)"; $engineLabel.ForeColor = $C.Warn }
@@ -289,7 +296,7 @@ $runBtn.Add_Click({
         $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true; $psi.RedirectStandardError = $true; $psi.RedirectStandardOutput = $true
         $script:EngineProc = [Diagnostics.Process]::Start($psi)
         $runBtn.Text = 'Executando… (cerca de 15 s)'; $runBtn.Enabled = $false
-        $jobLabel.Text = 'Medindo e depois mantendo as duas placas ocupadas por 10 s. Veja as duas curvas subirem juntas no histórico.'; $jobLabel.ForeColor = $C.Text
+        $jobLabel.Text = 'Medindo e depois mantendo as placas permitidas pela política ocupadas por 10 s. Veja as curvas no histórico.'; $jobLabel.ForeColor = $C.Text
     } catch { $jobLabel.Text = "Não consegui iniciar o Engine: $($_.Exception.Message)"; $jobLabel.ForeColor = $C.Warn }
 })
 function Step-Engine {
@@ -297,7 +304,7 @@ function Step-Engine {
     $code = $script:EngineProc.ExitCode
     $err = ''; try { $err = $script:EngineProc.StandardError.ReadToEnd() } catch {}
     $script:EngineProc.Dispose(); $script:EngineProc = $null
-    $runBtn.Text = 'Executar job nas duas placas'; $runBtn.Enabled = $true
+    $runBtn.Text = 'Executar job do Engine'; $runBtn.Enabled = $true
     Update-EngineLabel
     if ($code -ne 0) { $jobLabel.Text = "O job falhou: $($err.Trim())"; $jobLabel.ForeColor = $C.Warn }
 }

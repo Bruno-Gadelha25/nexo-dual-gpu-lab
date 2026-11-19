@@ -40,7 +40,7 @@ Os relatórios abaixo são preservados como foram escritos. Correções e ressal
 - [GPU Engine](gpu-engine.md)
 
 - [GPU Control](gpu-control.md)
-- [Integração OBS](obs-integration.md)
+- [Integração OBS](obs-integration.md) · [Gravação do vídeo no OBS](obs-recording.md)
 - Fase 4: [nota de logs ativos](../phases/phase4-monitoring/ACTIVE-LOGS.md)
 
 ## Dados

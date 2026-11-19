@@ -66,6 +66,14 @@ Cada teste fica registrado aqui, inclusive os que falharam ou foram invalidados.
 - **Resultado:** com um clique, as duas curvas de uso subiram juntas para ~95% por 10 s. Resultado na tela: GTX 970 71% + GTX 750 Ti 29%, 20,32 ms contra 26,82 ms, **24,2% mais rápido**, validação PASS.
 - **Captura:** [assets/gpu-control-v2-engine-run.png](assets/gpu-control-v2-engine-run.png)
 
+### Teste 10 — Uma placa de cada vez e preparação do OBS (19:30–19:34)
+
+- **O que foi feito:** o Engine rodou com as políticas "Só GTX 970" e "Só GTX 750 Ti". O OBS recebeu um perfil e uma coleção de cenas novos para gravar os dois monitores num único vídeo.
+- **Resultado:** só a GTX 970: **24,1 ms**; só a GTX 750 Ti: **53,1 ms**; as duas juntas (Teste 9): **20,3 ms**. Todas validadas.
+- **OBS:** 1920×1080 a 60 fps, painel à esquerda e jogo à direita, 4 cenas com legenda por teste. O OBS fica escondido da captura e o microfone vem mudo.
+- **Cuidado descoberto:** os dois monitores são gravados inteiros; janelas pessoais abertas aparecem no vídeo.
+- **Detalhes:** [obs-recording.md](obs-recording.md)
+
 ## Lições do dia
 
 1. Medir de novo é o que separa o que parece do que é. O "ganho de 50%" era cópia; o ganho real de computação é de 10% a 25%.

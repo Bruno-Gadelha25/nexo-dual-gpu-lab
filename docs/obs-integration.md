@@ -1,5 +1,7 @@
 # Integração com OBS
 
+> Atualização 2026-11-19: configuração de gravação do vídeo (dois monitores, 4 cenas) em [obs-recording.md](obs-recording.md). O NVENC por GPU continua não confirmado.
+
 **Estado:** planejamento. **Nenhum perfil foi aplicado, nenhuma gravação foi feita, o NVENC por GPU não foi confirmado.**
 
 Base: leitura do guia local `OBS-GPU-GUIDE.md`, de `obs-gpu-profiles.json` e de `obs-results.csv` (só cabeçalho) na pasta `gpu-switcher/obs-integration`. Nada foi importado neste PR.
