@@ -14,6 +14,7 @@
 - Logs de execuções podem conter PID, nomes/caminhos de processos, relógio, uso de memória e informações do ambiente.
 - Logs de monitoramento da Fase 4 são gravados no diretório original e não foram copiados porque estão ativos.
 - Os CSVs de benchmark e telemetria descrevem o hardware e o comportamento da máquina.
+- O snapshot local do relatório de Fase 4 contém o hostname `hostname local omitido por privacidade`; ele foi excluído do Git por `.gitignore` e permanece apenas como cópia privada de referência.
 
 A varredura local de arquivos textuais não encontrou padrões de credenciais comuns (chaves, tokens, senhas ou chaves privadas). Isso não substitui revisão manual dos dados identificadores antes de qualquer compartilhamento.
 
