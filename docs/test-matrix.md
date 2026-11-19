@@ -20,7 +20,8 @@ Tipos: **E** = estático (sem GPU), **C** = compilação, **U** = unitário, **B
 | Testes unitários | U | **NÃO EXISTEM** | — | candidato: função `expected()` e parsing de CSV |
 | Coletor Fase 4B | F | **FALHA** no código atual (local) | auditoria H4 | quebra na 2ª GPU; não grava |
 | Counters NVML PCIe | F | **NÃO VALIDADO** | 3 de 8 implausíveis | — |
-| Self-test GPU Control (5 botões) | F (UI) | PASS (relatado) | relatório local do self-test | não testa execução nas GPUs |
+| Self-test GPU Control v1.1 (5 botões + backups) | F (UI) | PASS 6/6 (2026-11-19) | `docs/gpu-control.md` | não testa execução nas GPUs |
+| Responsividade da janela GPU Control | F (UI) | v1.0 FALHA (>30 s); v1.1 PASS (≤175 ms) | `docs/gpu-control.md` | cliques por `BM_CLICK` |
 | NVENC por GPU no OBS | F | **NÃO EXECUTADO** | `docs/obs-integration.md` | — |
 | Monitoramento Fase 4 | F (passivo) | Em andamento | dados locais | não importado |
 | Kernel isolado com timestamps de GPU | F + B | **INCONCLUSIVO** | `docs/phase3b-probe-report.md` | timestamps não esperaram a cópia neste driver; usado o tempo do host |

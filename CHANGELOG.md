@@ -12,6 +12,7 @@ Branch `feature/claude-repository-audit-2026-11-19`. No benchmark CSV or histori
 - **Added:** documentation set: index, architecture (Mermaid), hardware and environment, research methodology, reproducibility, test matrix, phase status, Phase 4B status report, GPU Control, OBS, glossary, FAQ, English summary, contribution guide.
 - **Changed:** README rewritten as the lab's entry point, with results recomputed from the CSVs; technical overview, roadmap and privacy review updated.
 - **Added:** exploratory Phase 3b probe (`phases/phase3b-probe/`, `data/phase3b-probe/2026-11-19/`, `docs/phase3b-probe-report.md`): without the readback the dual path is 44% slower; the GTX 750 Ti is ~3.06x slower in compute; link now Gen3 x8.
+- **Fixed:** NEXO GPU CONTROL v1.1 (`phases/gpu-control/`): telemetry moved off the UI thread (v1.0 blocked 7–9 s per PnP query; clicks took up to 12 s or more than 30 s, closing took more than 30 s; v1.1: 31–175 ms and 87 ms), DeviceId discovery instead of hard-coded PnP instance IDs, single instance, atomic policy replace, 10-backup limit.
 - **Corrected (interpretation, not data):** Phase 3 timings include the GPU-to-host readback over PCIe; the reported gain is not established as a compute gain. See audit finding C1.
 
 ## [0.1.0-alpha.1] - 2026-11-19
