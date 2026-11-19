@@ -4,7 +4,14 @@ All notable project changes are recorded here. Experimental measurements are app
 
 ## [Unreleased]
 
-- No changes recorded.
+Branch `feature/claude-repository-audit-2026-11-19`. No benchmark CSV or historical phase report was modified.
+
+- **Added:** independent technical and scientific audit (`docs/audit/claude-audit-2026-11-19.md`), with severity table and verification steps.
+- **Added:** read-only re-analysis of Phase 3 CSVs (`analysis/reanalyze_phase3.py`) and its derived outputs: bootstrap 95% CIs, implied throughput, GTX 970 baseline consistency, repetition trend.
+- **Added:** `scripts/static-checks.ps1` (SemVer, CSV counts and statistics, Markdown links, credentials, absolute paths, PowerShell syntax, git fsck) and a static-only GitHub Actions workflow.
+- **Added:** documentation set: index, architecture (Mermaid), hardware and environment, research methodology, reproducibility, test matrix, phase status, Phase 4B status report, GPU Control, OBS, glossary, FAQ, English summary, contribution guide.
+- **Changed:** README rewritten as the lab's entry point, with results recomputed from the CSVs; technical overview, roadmap and privacy review updated.
+- **Corrected (interpretation, not data):** Phase 3 timings include the GPU-to-host readback over PCIe; the reported gain is not established as a compute gain. See audit finding C1.
 
 ## [0.1.0-alpha.1] - 2026-11-19
 

@@ -20,3 +20,13 @@
 `.gitignore` exclui executáveis e saídas brutas selecionadas. CSVs de benchmarks escolhidos permanecem no repositório privado por decisão do proprietário. Privado não significa livre de revisão: auditar todo novo arquivo e commit antes de sincronizar.
 
 A licença do projeto ainda não foi escolhida. Windows SDK, MSVC, FXC, drivers e ferramentas NVIDIA têm termos próprios; não redistribuí-los sem revisão. A proteção física/criptografia do volume E: não foi auditada.
+
+## Auditoria independente de 2026-11-19
+
+Detalhes em [audit/claude-audit-2026-11-19.md](audit/claude-audit-2026-11-19.md) (achados I1, L4, M7, M9).
+
+- **Histórico:** os 5 commits alcançáveis (`main` e `experiment/phase4b-gpu-control-status`) foram varridos em todas as versões de todos os arquivos. Nenhum token, chave privada, senha, e-mail pessoal, hostname ou PID operacional encontrado. A autoria usa e-mail `noreply` do GitHub.
+- **Caminhos absolutos conhecidos e aceitos:** `copy-manifest.csv` (87 caminhos `E:\NEXO-DUAL-GPU\...`, sem nome de usuário, necessários para `validate-version.ps1`), scripts de build (caminhos do Visual Studio e do SDK), scripts e nota da Fase 4. `scripts/static-checks.ps1` avisa se surgir caminho absoluto novo fora dessa lista.
+- **Identificadores de hardware versionados:** VEN/DEV/SUBSYS/REV, bus PCI e LUIDs das GPUs nas evidências da Fase 1 e no relatório da Fase 2. Descrevem modelos comerciais e um estado temporário (LUID muda a cada reinicialização); risco baixo. Os IDs de **instância** PnP (`4&...`) aparecem só nos arquivos locais da Fase 4B e do GPU Control, que **não** foram importados.
+- **Antes de importar a Fase 4:** o monitor grava o hostname (`$env:COMPUTERNAME`) no relatório e uma lista de processos em `gpu-processes.csv`. Anonimizar hostname, nomes de processos de terceiros e PIDs numa cópia; manter o original fora do Git.
+- **Não versionar sem revisão de segurança:** `gpu-switcher.ps1`, que pode desabilitar uma GPU.
