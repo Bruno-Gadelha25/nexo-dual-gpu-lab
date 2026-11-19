@@ -31,7 +31,13 @@ Os relatórios abaixo são preservados como foram escritos. Correções e ressal
 | [Progresso Fase 4B](progress/phase4b-pcie-progress-2026-11-19.md) | Resumo do operador. |
 | [Progresso GPU Control](progress/nexo-gpu-control-progress-2026-11-19.md) | Resumo do operador. |
 
+## Diário
+
+- [Diário de experimentos](experiment-log.md) — Teste 1, Teste 2…, inclusive os inválidos
+
 ## Módulos em preparação
+
+- [GPU Engine](gpu-engine.md)
 
 - [GPU Control](gpu-control.md)
 - [Integração OBS](obs-integration.md)

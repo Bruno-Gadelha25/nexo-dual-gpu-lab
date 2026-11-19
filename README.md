@@ -60,10 +60,11 @@ Mais diagramas e o fluxo da transferência: [docs/architecture.md](docs/architec
 | 3b — Sonda | Exploratória (2026-11-19) | Computação vs. cópia; link Gen3 x8 | [phase3b](docs/phase3b-probe-report.md) |
 | 4 — Monitoramento passivo | **Em andamento** | Coleta a cada 30 s; dados ainda não importados | [ACTIVE-LOGS](phases/phase4-monitoring/ACTIVE-LOGS.md) |
 | 4B — PCIe | Validação inicial | Counters NVML ainda não confiáveis; nenhum benchmark | [phase4b](docs/phase4b-pcie-report.md) |
-| GPU Control | Interface testada | Grava uma política; **não existe Engine que a consuma** | [gpu-control](docs/gpu-control.md) |
+| GPU Control | v2.0 testada | Painel com todas as métricas das duas placas e botão do Engine | [gpu-control](docs/gpu-control.md) |
+| GPU Engine | v0.1 funcional | Divide o job do NEXO ~72/28: **10% a 24% mais rápido** que a 970 sozinha | [gpu-engine](docs/gpu-engine.md) |
 | OBS | Planejamento | NVENC por GPU **não confirmado** | [obs](docs/obs-integration.md) |
 
-Visão consolidada: [docs/phase-status.md](docs/phase-status.md).
+Visão consolidada: [docs/phase-status.md](docs/phase-status.md). Diário de todos os testes, inclusive os que falharam: [docs/experiment-log.md](docs/experiment-log.md).
 
 ## Resultados (Fase 3, workload sintético)
 

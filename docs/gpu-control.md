@@ -1,6 +1,15 @@
 # NEXO GPU CONTROL
 
-**Estado:** interface testada. **Engine inexistente.** Nenhuma tarefa é distribuída entre GPUs por esta interface.
+**Estado:** v2.0, testada. O [NEXO GPU ENGINE](gpu-engine.md) já consome a política e executa o job do NEXO nas placas permitidas. Jogos continuam fora do alcance da interface.
+
+![GPU Control v2 durante um job do Engine](assets/gpu-control-v2-engine-run.png)
+
+## v2.0 (2026-11-19)
+
+- Painel de dois canais (GTX 970 em âmbar, GTX 750 Ti em ciano) com uso, uso do controlador de memória, clock do núcleo e da memória (atual/máximo), energia contra o limite, temperatura, ventoinha, VRAM, link PCIe, estado de energia, codificador e decodificador de vídeo, barramento, estado no Windows e motivo de limitação de clock.
+- Faixa de histórico com as duas curvas de uso sobrepostas (60 s), atualizada a cada 1 s.
+- Botão **Executar job nas duas placas**: roda o Engine (`--run --reps 3 --sustain 10`) e mostra divisão, tempos, ganho e validação.
+- Teste 9 do [diário](experiment-log.md): as duas curvas subiram juntas para ~95% por 10 s; 24,2% mais rápido que a GTX 970 sozinha; validação PASS.
 
 Fonte versionado: [`phases/gpu-control/source/NexoGpuControl.ps1`](../phases/gpu-control/source/NexoGpuControl.ps1) (v1.1) e [contrato do Engine](../phases/gpu-control/ENGINE-CONTRACT.md). A v1.1 não tem IDs de instância PnP no código: descobre as placas pelo DeviceId em tempo de execução. Resumo anterior do operador: [progress/nexo-gpu-control-progress-2026-11-19.md](progress/nexo-gpu-control-progress-2026-11-19.md).
 
@@ -34,7 +43,7 @@ Ela **não** chama `Disable-PnpDevice`, `Enable-PnpDevice`, `pnputil` nem altera
 
 | Aparência | Realidade |
 |---|---|
-| Botão "DUAL GPU ON" | grava `distributionEnabled=true` num JSON. Nada lê esse JSON. |
+| Botão "Duas placas" | grava `distributionEnabled=true` na política. O Engine respeita isso nos jobs dele; jogos não. |
 | Modo "GTX 970 ONLY" | restringe uma lista num JSON. As duas GPUs continuam ligadas. |
 | Self-test PASS | os 5 handlers de botão gravaram o JSON esperado. Não houve execução em GPU. |
 | Telemetria na tela | leitura do `nvidia-smi`. Não é medição de desempenho. |

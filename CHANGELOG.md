@@ -4,6 +4,14 @@ All notable project changes are recorded here. Experimental measurements are app
 
 ## [Unreleased]
 
+### feat/nexo-gpu-engine
+
+- **Added:** NEXO GPU ENGINE v0.1.0 (`phases/gpu-engine/`): consumes the GPU Control policy, calibrates each GPU, splits the NEXO job proportionally (~72/28), compares with the primary GPU alone (ABBA with untimed pre-roll) and validates every element. Valid sessions: 10.3–23.7% faster than the GTX 970 alone.
+- **Added:** NEXO GPU CONTROL v2.0: two-channel panel with every nvidia-smi metric, 60 s overlaid usage history, and a button that runs the Engine.
+- **Added:** experiment log (`docs/experiment-log.md`) with Tests 1–9, including the invalid run with the game open.
+
+### Audit branch
+
 Branch `feature/claude-repository-audit-2026-11-19`. No benchmark CSV or historical phase report was modified.
 
 - **Added:** independent technical and scientific audit (`docs/audit/claude-audit-2026-11-19.md`), with severity table and verification steps.
