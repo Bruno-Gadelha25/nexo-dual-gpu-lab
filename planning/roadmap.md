@@ -1,8 +1,9 @@
-﻿# Plano de continuidade — não iniciado
+﻿# Plano de continuidade
 
-1. Encerrar a Fase 4 e importar seus CSVs finais para uma pasta de campanha com timestamp; manter o original intacto.
-2. Revisar medições, limites e qualidade dos sensores antes de definir novas cargas.
-3. Planejar um scheduler adaptativo para trabalho particionado, com métricas locais e transferência fora do caminho crítico.
-4. Definir estratégia de composição/consumo de resultados Cross-Adapter e critérios de desempenho e integridade.
-5. Só depois de aprovação, desenhar um protótipo de renderização sem jogo; não inferir ganho de FPS dos benchmarks sintéticos.
-6. Decidir licença, destino privado e política de revisão antes de colaboração remota. Nenhuma integração externa está autorizada atualmente.
+1. Concluir e auditar a Fase 4 sem interromper a coleta; importar uma cópia datada somente depois de encerrada.
+2. Revisar medições, limites e qualidade dos sensores antes de novas cargas.
+3. Planejar scheduler adaptativo com dados locais por GPU e transferência fora do caminho crítico.
+4. Definir a estratégia de composição/consumo Cross-Adapter e critérios de desempenho.
+5. Só depois de aprovação, desenhar um protótipo de renderização sem jogo; benchmarks sintéticos não implicam ganho de FPS.
+6. Manter o repositório GitHub privado e revisar licença, dependências e privacidade antes de qualquer redistribuição.
+7. Desenvolver a integração OBS/GPU Switcher em branch de feature depois de integrar seus arquivos e resultados com auditoria; a preparação atual permanece fora deste snapshot.

@@ -1,25 +1,22 @@
 ﻿# Revisão de privacidade e estado de compartilhamento
 
-## Estado atual
+## Estado verificado em 2026-11-19
 
-- Área local: `E:\NEXO-DUAL-GPU\private-workspace`.
-- Git foi inicializado localmente. Nenhum remoto está configurado.
-- Nenhuma consulta remota ao GitHub, push, release, pacote ou publicação foi feita.
-- O workspace não é público porque não existe repositório remoto; seu conteúdo está apenas no armazenamento local disponível.
-- A cópia não modificou nem moveu os diretórios das Fases 1–4.
+- Workspace: `E:\NEXO-DUAL-GPU\private-workspace`.
+- Repositório remoto: `https://github.com/Bruno-Gadelha25/nexo-dual-gpu-lab`, proprietário `Bruno-Gadelha25`, visibilidade `PRIVATE`, branch padrão `main`.
+- A cópia local está sincronizada com `origin/main` antes das alterações de versionamento; qualquer envio destas alterações limita-se a arquivos administrativos revisados.
+- Nenhuma release pública, pacote ou alteração de visibilidade foi feita. O projeto permanece privado.
+- A revisão anterior registrou 2 commits e não encontrou padrões comuns de credenciais; esta informação não substitui nova auditoria antes de incluir dados novos.
 
-## Dados a tratar como privados
+## Dados privados
 
-- `dxdiag.txt`, relatórios de hardware e saídas WMI podem revelar nome do computador, IDs PnP, configuração e software instalado.
-- Logs de execuções podem conter PID, nomes/caminhos de processos, relógio, uso de memória e informações do ambiente.
-- Logs de monitoramento da Fase 4 são gravados no diretório original e não foram copiados porque estão ativos.
-- Os CSVs de benchmark e telemetria descrevem o hardware e o comportamento da máquina.
-- O snapshot local do relatório de Fase 4 contém o hostname `hostname local omitido por privacidade`; ele foi excluído do Git por `.gitignore` e permanece apenas como cópia privada de referência.
+- Relatórios de hardware, evidências WMI/DXGI/CUDA e benchmarks descrevem a configuração e o comportamento deste computador.
+- Logs podem incluir processos, caminhos, PIDs, uso de memória e sensores. Os logs brutos da campanha da Fase 4 não estão versionados.
+- A Fase 4 continua ativa no diretório original. Não copiar, mover ou editar seus arquivos de coleta enquanto o monitor estiver escrevendo.
+- O hostname foi substituído por texto de privacidade no documento versionado. O histórico alcançável foi auditado após essa correção; o backup antigo do histórico não pertence ao repositório e nunca deve ser enviado.
 
-A varredura local de arquivos textuais não encontrou padrões de credenciais comuns (chaves, tokens, senhas ou chaves privadas). Isso não substitui revisão manual dos dados identificadores antes de qualquer compartilhamento.
+## Proteções e limites
 
-## Proteções do repositório
+`.gitignore` exclui executáveis e saídas brutas selecionadas. CSVs de benchmarks escolhidos permanecem no repositório privado por decisão do proprietário. Privado não significa livre de revisão: auditar todo novo arquivo e commit antes de sincronizar.
 
-`.gitignore` exclui executáveis, objetos compilados, logs brutos de fases, `dxdiag.txt`, estado do monitor e arquivos de credenciais. Os CSVs selecionados de benchmark permanecem locais e versionados neste repositório local privado.
-
-A proteção de acesso e criptografia do volume E: não foi auditada. Nenhum conteúdo foi enviado a serviços externos nesta organização.
+A licença do projeto ainda não foi escolhida. Windows SDK, MSVC, FXC, drivers e ferramentas NVIDIA têm termos próprios; não redistribuí-los sem revisão. A proteção física/criptografia do volume E: não foi auditada.

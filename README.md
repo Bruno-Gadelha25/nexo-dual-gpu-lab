@@ -1,27 +1,31 @@
-﻿# NEXO DUAL GPU LAB — área de trabalho privada
+﻿# NEXO DUAL GPU LAB
 
-Este diretório contém cópias locais organizadas do projeto. O trabalho fica somente neste computador: não há remoto Git configurado, publicação ou compartilhamento.
+Projeto privado de pesquisa sobre computação heterogênea com Direct3D 12, recursos Cross-Adapter e escalonamento de carga entre duas GPUs.
+
+- **Versão:** consulte [`VERSION`](VERSION); changelog em [`CHANGELOG.md`](CHANGELOG.md).
+- **Estado:** experimental alpha, não é um renderizador multi-GPU para jogos e não há ganho de FPS comprovado.
+- **Repositório remoto:** `Bruno-Gadelha25/nexo-dual-gpu-lab`, visibilidade **PRIVATE** (confirmada em 2026-11-19). Nenhuma release pública está autorizada.
 
 ## Estrutura
 
-- `phases/phase1-diagnostic/` — fontes, executáveis de referência e evidências da auditoria de hardware.
-- `phases/phase2-prototype/` — fonte D3D12, artefatos e logs históricos da prova de conceito.
-- `phases/phase3-optimization/` — fonte, scripts, resultados e logs do benchmark de otimização.
-- `phases/phase4-monitoring/` — scripts e snapshots documentais da campanha ativa.
-- `benchmarks/phase2/` e `benchmarks/phase3/` — CSVs selecionados para análise e versionamento local.
-- `docs/` — relatórios, arquitetura, privacidade e dependências/licenças.
-- `planning/` — planejamento ainda não executado.
+- `phases/phase1-diagnostic/` — fontes e evidências da auditoria de hardware.
+- `phases/phase2-prototype/` — fonte D3D12, prova de conceito e scripts.
+- `phases/phase3-optimization/` — fonte, scripts, dados e resultados de benchmarks sintéticos.
+- `phases/phase4-monitoring/` — scripts e nota da campanha passiva. Os logs ativos permanecem no diretório de origem e não devem ser copiados enquanto estiverem sendo escritos.
+- `benchmarks/` — CSVs selecionados e auditados das Fases 2–3.
+- `docs/` — arquitetura, resultados, dependências, privacidade e política de versões.
+- `planning/` — próximos passos e revisões pendentes.
 
-Os executáveis e logs brutos permanecem disponíveis na cópia local, mas são excluídos do Git por `.gitignore`. CSVs de benchmark selecionados estão versionados. As evidências brutas de diagnóstico podem conter identificadores do computador.
+## Limites
 
-`copy-manifest.csv` registra os hashes SHA256 de 87 arquivos copiados e confirma que as cópias correspondem às fontes no momento da organização.
+As provas de conceito medem computação sintética, criação/uso de recursos compartilhados e sincronização. Elas não demonstram composição de frames, apresentação ou escalabilidade de um motor gráfico. A cópia Cross-Adapter não constitui memória VRAM unificada. Consulte os relatórios de cada fase e preserve seus CSVs originais.
 
-## Fase 4 ativa
+## Desenvolvimento
 
-Não copie, mova ou renomeie os arquivos em escrita em `E:\NEXO-DUAL-GPU\phase4-monitoring\logs\AAAA-MM-DD\`. A campanha ativa permanece na pasta original. Esta área inclui os scripts e uma nota de referência; os CSVs da coleta serão incorporados depois que a campanha encerrar.
+- Política: [`docs/VERSIONING.md`](docs/VERSIONING.md)
+- Histórico: [`VERSION_HISTORY.md`](VERSION_HISTORY.md)
+- Dependências/licenças: [`docs/dependencies-and-licenses.md`](docs/dependencies-and-licenses.md)
+- Privacidade: [`docs/privacy-review.md`](docs/privacy-review.md)
+- Validação local: `powershell -NoProfile -File scripts/validate-version.ps1`
 
-## Histórico
-
-Repositório Git local, branch `main`, sem remotes. O primeiro commit usa identidade local técnica `NEXO Dual GPU Lab (local) <nexo-dual-gpu-lab@local.invalid>`; essa identidade não está configurada globalmente e deve ser substituída pela identidade do proprietário antes de qualquer colaboração externa.
-
-Consulte `docs/privacy-review.md`, `docs/dependencies-and-licenses.md` e `planning/publication-review.md` antes de qualquer futura publicação ou sincronização.
+Builds e testes de hardware devem ser relatados separadamente. CI sem GTX 970 e GTX 750 Ti físicas não valida comportamento Multi-GPU real. A licença do projeto ainda não foi definida; não redistribuir.
