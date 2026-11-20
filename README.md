@@ -59,6 +59,7 @@ Num PC com uma GTX 970 e uma GTX 750 Ti, um programa próprio (o **NEXO GPU ENGI
 | O "ganho de 50%" da Fase 3 era de cálculo? | **Não.** Vinha de duas conexões PCIe copiando dados ao mesmo tempo. Descoberto testando com e sem a cópia. | [Auditoria](docs/audit/claude-audit-2026-11-19.md), [Fase 3b](docs/phase3b-probe-report.md) |
 | Duas placas aumentam o FPS de jogos? | **Não.** Forza Horizon 4: 85 FPS só com a 970 e 86 FPS com as duas habilitadas. O jogo usa uma placa só, e aqui o limite é o processador. | [Teste com Forza](docs/fh4-test-2026-11-19.md) |
 | A segunda placa pode ajudar enquanto se joga? | **Sim, em outra função.** A GTX 970 roda o jogo e a GTX 750 Ti codifica a gravação do vídeo (encoder a 28%). | [Teste 12](docs/experiment-log.md) |
+| E com inteligência artificial local? | **Depende do tamanho.** Modelo de 8B que não cabe numa placa: **+43%** nas duas. Memória (embeddings em lote): **+26% a +34%**. Modelo pequeno: melhor só na 970. | [IA nas duas placas](docs/ai-dual-gpu.md) |
 | Dá para ver isso acontecendo? | **Sim.** O painel NEXO GPU CONTROL mostra ao vivo todas as métricas das duas placas e tem um botão que roda o Engine. | [GPU Control](docs/gpu-control.md) |
 
 ## Teve melhora ou não?
@@ -76,15 +77,24 @@ Em uma frase: **duas placas ajudam programas feitos para dividir o trabalho (~18
 
 ## E com inteligência artificial?
 
-IA é um caso muito mais favorável que jogos, porque o programa decide onde cada parte roda. Há três formas de usar duas placas, **ainda não medidas neste laboratório**:
+**Medido em 2026-11-20** com os modelos dos assistentes locais do autor, **Julinha** e **Nexo**, rodando de graça no próprio PC (Ollama, CUDA). Detalhes, método e dados: [docs/ai-dual-gpu.md](docs/ai-dual-gpu.md).
 
-| Forma | Como funciona | O que se ganha | Cuidado |
-|---|---|---|---|
-| **Uma tarefa por placa** | ex.: o modelo de conversa na GTX 970; reconhecimento de voz e embeddings na GTX 750 Ti | as tarefas não disputam a mesma placa nem a mesma VRAM | é a forma mais simples e a mais estável |
-| **Dividir lotes de trabalho** (como o Engine) | um lote de embeddings ou de imagens dividido ~71/29 pela velocidade de cada placa | mais itens por segundo, na mesma lógica dos 10–26% medidos | só vale para trabalho que pode ser separado em pedaços independentes |
-| **Um modelo grande dividido entre as duas** | as camadas do modelo ficam parte na 970 e parte na 750 Ti | cabe um modelo maior do que 4 GB, sem usar a RAM do sistema | não fica mais rápido (as camadas rodam em sequência e conversam pelo PCIe) e a placa mais fraca pode virar gargalo |
+| Tarefa de IA | Só GTX 970 | Só GTX 750 Ti | As duas juntas | Duas placas ajudam? |
+|---|---:|---:|---:|---|
+| **Nexo** conversando (modelo 8B, 5 GB, não cabe numa placa) | 5,15 tok/s (resto na RAM) | 4,0 tok/s | **7,35 tok/s** | **Sim, +43%**: as duas viram uma placa de ~8 GB |
+| **Memória da Julinha** (1.536 textos em embeddings) | 52 s | 105–109 s | **35–38 s** (divisão 67/33) | **Sim, +26% a +34%**; meio a meio não ganha nada |
+| **Julinha** conversando (modelo 1.7B, cabe na 970) | **48 tok/s** | 20 tok/s | 19,5 tok/s | **Não**: modelo que cabe numa placa roda melhor só na 970 |
+| **Julinha** com modelo 4B | **20,6 tok/s** | 10,1 tok/s | 14,4 tok/s | **Não** |
+| qwen3 30B-A3B (18 GB) | 4,7 tok/s (resto na RAM) | — | **6,2 tok/s** | **Sim, +32%** |
+| Duas conversas ao mesmo tempo (1.7B) | **60 tok/s somados** (`num_parallel 2`) | — | 35 tok/s (uma em cada placa) | **Não** |
 
-Observação de um projeto separado do autor (um assistente de voz local, fora deste repositório e sem dados versionados aqui): a primeira forma está em uso, com o modelo de conversa na GTX 970 e voz e embeddings na GTX 750 Ti. Uma tentativa da terceira forma, com um modelo de 8B dividido enquanto a voz também usava a 750 Ti, deixou a voz muito mais lenta, porque a placa lotou. Por isso a próxima campanha deste laboratório é medir a segunda forma (lotes divididos) com dados versionados.
+Em uma frase: **para IA, as duas placas ajudam quando o trabalho não cabe numa só (modelo grande) ou pode ser dividido em lotes (memória); para modelo pequeno, a GTX 970 sozinha é melhor.**
+
+[![A interface da Julinha OS ao lado do NEXO GPU CONTROL](docs/assets/video-julinha-interface.jpg)](docs/assets/videos/08-julinha-nexo-interface.mp4)
+
+*Vídeo (3min10): o sistema funcionando. À esquerda, a interface da Julinha OS (roxo = Julinha, ciano = Nexo), com a troca entre as duas personas, o menu Cérebro e o Modo fusão, com voz; à direita, o NEXO GPU CONTROL com as duas placas ao vivo. Há também uma [demonstração em terminal](docs/assets/videos/07-ia-duas-placas.mp4) (1min24) com o Nexo espalhado nas duas placas. Gravados depois da medição, com o OBS ligado; os números oficiais são os da tabela.*
+
+Achado prático: com as duas placas visíveis, o Ollama colocou o modelo pequeno na GTX 750 Ti (que tinha mais memória livre, porque a 970 desenha o monitor), e a conversa ficou 2,4× mais lenta. Prender cada Ollama na placa certa importa mais do que ter duas placas.
 
 ## Vídeos
 
@@ -98,6 +108,8 @@ Clipes curtos (720p, ~15–18 s), gravados em 2026-11-19 com o painel NEXO GPU C
 | [Forza na GTX 970](docs/assets/videos/04-forza-gtx970.mp4) | o jogo usa a 970; a 750 Ti fica parada | uma placa só |
 | [Forza na GTX 750 Ti](docs/assets/videos/05-forza-gtx750ti.mp4) | o jogo escolhido para rodar na 750 Ti (99% de uso na largada) | a placa escolhida no Windows trabalha |
 | [Forza na 970 + 750 Ti gravando](docs/assets/videos/06-forza-970-joga-750-grava.mp4) | a 970 roda o jogo e a 750 Ti codifica a gravação | as duas, cada uma numa função |
+| [Julinha e Nexo na interface](docs/assets/videos/08-julinha-nexo-interface.mp4) (2026-11-20, 3min10) | interface da Julinha OS (troca de persona, menu Cérebro, Modo fusão, voz) ao lado do GPU Control | o sistema funcionando nas duas placas |
+| [IA nas duas placas](docs/assets/videos/07-ia-duas-placas.mp4) (2026-11-20, 1min24) | Julinha na 970 e na 750 Ti, duas conversas juntas, Nexo (8B) espalhado nas duas | Nexo +43% nas duas (medido sem OBS) |
 
 Os trechos do Engine mostram o painel ampliado; a segunda tela estava sem conteúdo nesses momentos. Como foram gravados e editados: [docs/obs-recording.md](docs/obs-recording.md) e Teste 12 do [diário](docs/experiment-log.md).
 

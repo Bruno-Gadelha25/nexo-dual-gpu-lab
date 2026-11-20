@@ -117,3 +117,16 @@ Cada teste fica registrado aqui, inclusive os que falharam ou foram invalidados.
 - Engine com mais sessões (ao menos 3, em horários diferentes) e intervalo de confiança.
 - Mais tamanhos de job e iterações, para mapear quando compensa usar as duas placas.
 - OBS gravando pelo NVENC da GTX 750 Ti enquanto a GTX 970 roda um jogo.
+
+## 2026-11-20
+
+### Teste 13: IA local (Julinha e Nexo) nas duas placas
+
+- **O que foi feito:** um Ollama por arranjo (só 970, só 750 Ti, as duas, 970 com dois pedidos juntos), cada um preso pelo UUID da placa e conferido no log. Modelos: qwen3:1.7b e qwen3:4b-instruct (Julinha), `nexo:latest` 8B (Nexo), `embeddinggemma:300m` (memória). Método e tabelas completas: [ai-dual-gpu.md](ai-dual-gpu.md).
+- **Resultados:**
+  - Nexo 8B (não cabe numa placa): 5,15 tok/s na 970 + RAM, **7,35 tok/s nas duas (+43%)**.
+  - Memória (1.536 textos): 52 s na 970, **35–38 s nas duas com divisão 67/33 (+26% a +34%)**; meio a meio, 51–52 s (sem ganho).
+  - Julinha 1.7B: **48 tok/s só na 970**, 20 na 750 Ti; dividir não ajuda. Julinha 4B: 20,6 na 970, 14,4 nas duas.
+  - Duas conversas juntas (1.7B): 970 com `num_parallel 2` soma 60 tok/s; uma em cada placa, 35 tok/s.
+- **Medição inválida, guardada:** a primeira rodada usou o Ollama principal da máquina achando que ele estava só na 970. O log mostrou as duas placas visíveis, e o modelo pequeno caiu na 750 Ti. Os dados ficaram separados com `INVALIDO` no nome.
+- **Lição:** a regra do Engine vale para IA. Duas placas de velocidades diferentes só ajudam com trabalho divisível na proporção certa ou grande demais para uma placa.
