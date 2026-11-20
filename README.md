@@ -85,13 +85,14 @@ Em uma frase: **duas placas ajudam programas feitos para dividir o trabalho (~18
 | **Memória da Julinha** (1.536 textos em embeddings) | 52 s | 105–109 s | **35–38 s** (divisão 67/33) | **Sim, +26% a +34%**; meio a meio não ganha nada |
 | **Julinha** conversando (modelo 1.7B, cabe na 970) | **48 tok/s** | 20 tok/s | 19,5 tok/s | **Não**: modelo que cabe numa placa roda melhor só na 970 |
 | **Julinha** com modelo 4B | **20,6 tok/s** | 10,1 tok/s | 14,4 tok/s | **Não** |
+| qwen3 30B-A3B (18 GB) | 4,7 tok/s (resto na RAM) | — | **6,2 tok/s** | **Sim, +32%** |
 | Duas conversas ao mesmo tempo (1.7B) | **60 tok/s somados** (`num_parallel 2`) | — | 35 tok/s (uma em cada placa) | **Não** |
 
 Em uma frase: **para IA, as duas placas ajudam quando o trabalho não cabe numa só (modelo grande) ou pode ser dividido em lotes (memória); para modelo pequeno, a GTX 970 sozinha é melhor.**
 
-[![Nexo espalhado nas duas placas, com o painel mostrando as duas trabalhando](docs/assets/video-ia-nexo-duas-placas.jpg)](docs/assets/videos/07-ia-duas-placas.mp4)
+[![A interface da Julinha OS ao lado do NEXO GPU CONTROL](docs/assets/video-julinha-interface.jpg)](docs/assets/videos/08-julinha-nexo-interface.mp4)
 
-*Vídeo (1min24): a Julinha na 970, na 750 Ti, duas conversas ao mesmo tempo e o Nexo espalhado nas duas. Gravado depois da medição, com o OBS ligado; os números oficiais são os da tabela.*
+*Vídeo (3min10): o sistema funcionando. À esquerda, a interface da Julinha OS (roxo = Julinha, ciano = Nexo), com a troca entre as duas personas, o menu Cérebro e o Modo fusão, com voz; à direita, o NEXO GPU CONTROL com as duas placas ao vivo. Há também uma [demonstração em terminal](docs/assets/videos/07-ia-duas-placas.mp4) (1min24) com o Nexo espalhado nas duas placas. Gravados depois da medição, com o OBS ligado; os números oficiais são os da tabela.*
 
 Achado prático: com as duas placas visíveis, o Ollama colocou o modelo pequeno na GTX 750 Ti (que tinha mais memória livre, porque a 970 desenha o monitor), e a conversa ficou 2,4× mais lenta. Prender cada Ollama na placa certa importa mais do que ter duas placas.
 
@@ -107,6 +108,7 @@ Clipes curtos (720p, ~15–18 s), gravados em 2026-11-19 com o painel NEXO GPU C
 | [Forza na GTX 970](docs/assets/videos/04-forza-gtx970.mp4) | o jogo usa a 970; a 750 Ti fica parada | uma placa só |
 | [Forza na GTX 750 Ti](docs/assets/videos/05-forza-gtx750ti.mp4) | o jogo escolhido para rodar na 750 Ti (99% de uso na largada) | a placa escolhida no Windows trabalha |
 | [Forza na 970 + 750 Ti gravando](docs/assets/videos/06-forza-970-joga-750-grava.mp4) | a 970 roda o jogo e a 750 Ti codifica a gravação | as duas, cada uma numa função |
+| [Julinha e Nexo na interface](docs/assets/videos/08-julinha-nexo-interface.mp4) (2026-11-20, 3min10) | interface da Julinha OS (troca de persona, menu Cérebro, Modo fusão, voz) ao lado do GPU Control | o sistema funcionando nas duas placas |
 | [IA nas duas placas](docs/assets/videos/07-ia-duas-placas.mp4) (2026-11-20, 1min24) | Julinha na 970 e na 750 Ti, duas conversas juntas, Nexo (8B) espalhado nas duas | Nexo +43% nas duas (medido sem OBS) |
 
 Os trechos do Engine mostram o painel ampliado; a segunda tela estava sem conteúdo nesses momentos. Como foram gravados e editados: [docs/obs-recording.md](docs/obs-recording.md) e Teste 12 do [diário](docs/experiment-log.md).

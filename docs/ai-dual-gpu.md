@@ -64,6 +64,24 @@ Leitura: para modelo pequeno, **a 970 sozinha atende duas pessoas melhor** do qu
 
 Leitura: **mesma lição do NEXO GPU ENGINE.** Com a divisão pela velocidade, as duas placas juntas indexam a memória **26% a 34% mais rápido** que a 970 sozinha. Meio a meio, o ganho some (a 750 Ti termina por último). O teto teórico somando as velocidades é ~33%; os resultados ficam nele.
 
+### 4. Os outros modelos do menu "Cérebro"
+
+Mesma medição, feita depois, **com a interface da Julinha aberta no navegador** (a esfera de partículas usa um pouco da GTX 970) e o serviço de memória da Julinha ocupando ~0,6 GB da GTX 750 Ti. Os números da 970 podem estar um pouco abaixo dos da seção 1. Dados: [`modelos-menu-cerebro.jsonl`](../data/ai-dual-gpu/2026-11-20/modelos-menu-cerebro.jsonl).
+
+| Modelo | Só GTX 970 | Só GTX 750 Ti | As duas | Melhor |
+|---|---:|---:|---:|---|
+| qwen3:4b (com raciocínio) | **19,7 tok/s** (`num_gpu 99`) | 9,4 tok/s | 13,0 tok/s | só a 970 |
+| qwen3:8b (os mesmos pesos de `nexo`, `qwen3-quick` e `qwen3-fast`) | 3,35 tok/s (`num_gpu 20`, resto na RAM) | — | **5,35 tok/s** | **as duas: +60%** |
+| qwen3:30b-a3b (MoE, 18 GB) | 4,7 tok/s (2,4 GB na placa, resto na RAM) | — | **6,2 tok/s** (4,8 GB nas placas) | **as duas: +32%** |
+
+Leitura: a regra se repete. Todo modelo maior que uma placa ganha com as duas (8B: +43% a +60%; 30B: +32%); todo modelo que cabe numa placa roda melhor só na 970. O qwen3:4b "pensa em inglês" antes de responder mesmo com `think: false`, o que piora a primeira palavra; para conversa, o 4b-instruct é melhor.
+
+## O sistema funcionando (vídeo)
+
+[![Interface da Julinha OS ao lado do NEXO GPU CONTROL](assets/video-julinha-interface.jpg)](assets/videos/08-julinha-nexo-interface.mp4)
+
+Vídeo de 3min10 com a **interface da Julinha OS** (a esfera de partículas; roxo = Julinha, ciano = Nexo) ao lado do **NEXO GPU CONTROL**: pergunta à Julinha, "troca para o Nexo", troca de modelo no menu Cérebro (1.7B → 4B), Modo fusão (Nexo × Julinha) e despedida, com a voz delas. As respostas aparecem como legenda porque a interface responde por voz. Neste vídeo a conversa usa o Ollama preso na GTX 970, e a voz e a memória usam a GTX 750 Ti (o arranjo "uma função por placa"). A espera de ~36 s para carregar o modelo 4B foi cortada. Gravado com o OBS ligado: os números oficiais são os das tabelas.
+
 ## Resposta curta
 
 | Tarefa de IA | Duas placas ajudam? |
