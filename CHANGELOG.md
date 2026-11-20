@@ -4,6 +4,17 @@ All notable project changes are recorded here. Experimental measurements are app
 
 ## [Unreleased]
 
+### feat/nexo-gpu-engine
+
+- **Added:** NEXO GPU ENGINE v0.1.0 (`phases/gpu-engine/`): consumes the GPU Control policy, calibrates each GPU, splits the NEXO job proportionally (~72/28), compares with the primary GPU alone (ABBA with untimed pre-roll) and validates every element. Valid sessions: 10.3–23.7% faster than the GTX 970 alone.
+- **Added:** NEXO GPU CONTROL v2.0: two-channel panel with every nvidia-smi metric, 60 s overlaid usage history, and a button that runs the Engine.
+- **Added:** OBS recording setup (`docs/obs-recording.md`, `tools/obs/make_obs_nexo.py`): two-monitor 1920x1080 layout, four labelled scenes, OBS hidden from capture; GPU Control v2.1 opens on the secondary monitor and its Engine button works for any policy.
+- **Fixed:** OBS recording interfered with the Engine (dual job up to 183% slower) because the OBS preview window was drawn on the GTX 750 Ti monitor; recording now runs minimized to tray with hotkeys at 30 fps (dual job 24.1% faster while recording). Scene 5 added.
+- **Added:** Test 12 (final video recording): Forza on the GTX 970 with the GTX 750 Ti encoding the recording; README rewritten in full detail with illustrations.
+- **Added:** experiment log (`docs/experiment-log.md`) with Tests 1–12, including the invalid run with the game open.
+
+### Audit branch
+
 Branch `feature/claude-repository-audit-2026-11-19`. No benchmark CSV or historical phase report was modified.
 
 - **Added:** independent technical and scientific audit (`docs/audit/claude-audit-2026-11-19.md`), with severity table and verification steps.

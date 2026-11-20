@@ -23,6 +23,8 @@ Tipos: **E** = estático (sem GPU), **C** = compilação, **U** = unitário, **B
 | Self-test GPU Control v1.1 (5 botões + backups) | F (UI) | PASS 6/6 (2026-11-19) | `docs/gpu-control.md` | não testa execução nas GPUs |
 | Responsividade da janela GPU Control | F (UI) | v1.0 FALHA (>30 s); v1.1 PASS (≤175 ms) | `docs/gpu-control.md` | cliques por `BM_CLICK` |
 | Forza Horizon 4: 970 vs. duas placas | F (jogo) | 85 vs. 86 FPS; 750 Ti em repouso | `docs/fh4-test-2026-11-19.md` | n=1 por configuração; limitado pela CPU |
+| NEXO GPU ENGINE: job distribuído vs. GTX 970 | F + B | 10,3–23,7% mais rápido, validação PASS (Teste 8) | `docs/gpu-engine.md` | poucas sessões, mesmo dia |
+| GPU Control v2: botão do Engine | F (UI) | PASS; duas curvas a ~95% por 10 s (Teste 9) | `docs/experiment-log.md` | — |
 | NVENC por GPU no OBS | F | **NÃO EXECUTADO** | `docs/obs-integration.md` | — |
 | Monitoramento Fase 4 | F (passivo) | Em andamento | dados locais | não importado |
 | Kernel isolado com timestamps de GPU | F + B | **INCONCLUSIVO** | `docs/phase3b-probe-report.md` | timestamps não esperaram a cópia neste driver; usado o tempo do host |
