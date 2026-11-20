@@ -86,6 +86,24 @@ Cada teste fica registrado aqui, inclusive os que falharam ou foram invalidados.
 - **Correção:** gravar com o OBS minimizado (atalho "NEXO Gravar (OBS)"), controlando por teclas: Ctrl+Alt+R grava, Ctrl+Alt+S para, Ctrl+Alt+1…5 troca a cena. Gravação de 30 fps em vez de 60.
 - **Verificação:** gravando minimizado, o Engine deu **24,1% mais rápido** com validação PASS, e o OBS desenhou 892 quadros em ~30 s, sem atraso de renderização. Os atalhos foram testados (cena, iniciar e parar aparecem no log). Os vídeos de teste foram apagados sem ser abertos.
 
+### Teste 12 — Gravação do vídeo (20:27–20:59)
+
+- **O que foi feito:** gravação final do vídeo, um trecho por vez, com o OBS minimizado e o NVENC da GTX 970; no último trecho, o codificador do OBS passou para a GTX 750 Ti (`obs_nvenc_h264_cuda`, GPU 1). Num teste de 12 s, o encoder da 750 Ti chegou a 33% e o da 970 ficou em 0%.
+- **Engine durante as gravações:** só GTX 970 23,6 ms; só GTX 750 Ti 57,9 ms; as duas juntas 20,3 ms contra 23,0 ms da 970 sozinha (**11,8% mais rápido**). Validação PASS em todos.
+- **Forza Horizon 4, lido no painel gravado:**
+
+| Trecho | GTX 970 | GTX 750 Ti | Leitura |
+|---|---|---|---|
+| Jogo na 970 (20:35) | 85%, 117 W | 1 W, parada | uma placa |
+| Jogo na 750 Ti (20:43), escolhida em Configurações → Gráficos | 26% | 64%, 20 W | o jogo roda na placa escolhida |
+| Jogo na 970 + 750 Ti gravando (20:56) | 84%, 113 W | encoder 28%, 2 W | **as duas juntas, cada uma numa função** |
+
+- **Problemas no caminho:** um segundo OBS foi aberto na GTX 750 Ti depois que a "GPU de alto desempenho padrão" do Windows foi trocada para ela; a captura DXGI do monitor da 970 ficou preta e o NVENC falhou (`OpenSharedResource failed`). Correção: a GPU padrão voltou para a 970, o OBS foi fixado em alto desempenho e as duas capturas passaram a usar WGC.
+- **Edição:** vídeo final montado com ffmpeg (x264): abertura, Testes 1–3 com o painel ampliado (o outro monitor estava vazio), os três trechos do Forza e um encerramento com estes números. Legendas trocadas nos trechos das 20:43 e 20:56 foram corrigidas na edição.
+
+![Forza na GTX 970](assets/video-forza-gtx970.jpg)
+![Forza na GTX 750 Ti](assets/video-forza-gtx750ti.jpg)
+
 ## Lições do dia
 
 1. Medir de novo é o que separa o que parece do que é. O "ganho de 50%" era cópia; o ganho real de computação é de 10% a 25%.
