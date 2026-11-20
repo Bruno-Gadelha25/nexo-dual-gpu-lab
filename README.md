@@ -161,6 +161,7 @@ Em computação pura, medida neste PC, a **GTX 750 Ti é cerca de 3 vezes mais l
 ## Como as duas placas trabalham juntas
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#1f1b26","primaryTextColor":"#f4f2ee","primaryBorderColor":"#ee1c25","lineColor":"#ee1c25","secondaryColor":"#2a2533","tertiaryColor":"#1a1720","clusterBkg":"#18151d","clusterBorder":"#77708a","edgeLabelBackground":"#14121a","fontFamily":"Segoe UI, Arial, sans-serif","actorBkg":"#1f1b26","actorBorder":"#ee1c25","actorTextColor":"#f4f2ee","actorLineColor":"#9a94a8","signalColor":"#ee1c25","signalTextColor":"#14121a","noteBkgColor":"#3a1418","noteTextColor":"#f4f2ee","noteBorderColor":"#ee1c25","labelBoxBkgColor":"#1f1b26","labelBoxBorderColor":"#ee1c25","labelTextColor":"#f4f2ee","loopTextColor":"#f4f2ee","activationBkgColor":"#3a1418"}}}%%
 flowchart LR
   UI["NEXO GPU CONTROL<br/>(painel)"] -->|grava a política| POL["scheduler-policy.json"]
   POL --> ENG["NEXO GPU ENGINE"]
@@ -173,6 +174,14 @@ flowchart LR
   R1 --> V
   V -->|5. status e tempos| ST["engine-status.json"]
   ST --> UI
+  classDef g970 fill:#3a2508,stroke:#ffa028,color:#ffd9a0,stroke-width:2px
+  classDef g750 fill:#0b2f33,stroke:#3cd2dc,color:#c8f6fa,stroke-width:2px
+  classDef eng fill:#3a1418,stroke:#ee1c25,color:#ffffff,stroke-width:2px
+  classDef data fill:#1f1b26,stroke:#9a94a8,color:#f4f2ee,stroke-width:1px
+  class UI,POL,ST data
+  class ENG,CAL,V eng
+  class Q0,R0 g970
+  class Q1,R1 g750
 ```
 
 Passo a passo:
