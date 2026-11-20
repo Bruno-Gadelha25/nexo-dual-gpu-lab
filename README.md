@@ -15,6 +15,7 @@
 
 1. [Em uma frase](#em-uma-frase)
 2. [Resumo dos resultados](#resumo-dos-resultados)
+   - [Vídeos](#vídeos)
 3. [O que este projeto é e o que não é](#o-que-este-projeto-é-e-o-que-não-é)
 4. [O problema de pesquisa](#o-problema-de-pesquisa)
 5. [O hardware](#o-hardware)
@@ -53,6 +54,21 @@ Num PC com uma GTX 970 e uma GTX 750 Ti, um programa próprio (o **NEXO GPU ENGI
 | Duas placas aumentam o FPS de jogos? | **Não.** Forza Horizon 4: 85 FPS só com a 970 e 86 FPS com as duas habilitadas. O jogo usa uma placa só, e aqui o limite é o processador. | [Teste com Forza](docs/fh4-test-2026-11-19.md) |
 | A segunda placa pode ajudar enquanto se joga? | **Sim, em outra função.** A GTX 970 roda o jogo e a GTX 750 Ti codifica a gravação do vídeo (encoder a 28%). | [Teste 12](docs/experiment-log.md) |
 | Dá para ver isso acontecendo? | **Sim.** O painel NEXO GPU CONTROL mostra ao vivo todas as métricas das duas placas e tem um botão que roda o Engine. | [GPU Control](docs/gpu-control.md) |
+
+## Vídeos
+
+Clipes curtos (720p, ~15–18 s), gravados em 2026-11-19 com o painel NEXO GPU CONTROL e a tela do jogo. Clique para assistir no GitHub.
+
+| Clipe | O que mostra | Resultado na tela |
+|---|---|---|
+| [Só a GTX 970](docs/assets/videos/01-so-gtx970.mp4) | job do Engine com a política "Só GTX 970": só a curva âmbar sobe | 23,6 ms |
+| [Só a GTX 750 Ti](docs/assets/videos/02-so-gtx750ti.mp4) | o mesmo job só na 750 Ti: só a curva ciano sobe | 57,9 ms |
+| [As duas juntas](docs/assets/videos/03-duas-placas.mp4) | divisão 71/29: as duas curvas sobem juntas | 20,3 ms, 11,8% mais rápido |
+| [Forza na GTX 970](docs/assets/videos/04-forza-gtx970.mp4) | o jogo usa a 970; a 750 Ti fica parada | uma placa só |
+| [Forza na GTX 750 Ti](docs/assets/videos/05-forza-gtx750ti.mp4) | o jogo escolhido para rodar na 750 Ti (99% de uso na largada) | a placa escolhida no Windows trabalha |
+| [Forza na 970 + 750 Ti gravando](docs/assets/videos/06-forza-970-joga-750-grava.mp4) | a 970 roda o jogo e a 750 Ti codifica a gravação | as duas, cada uma numa função |
+
+Os trechos do Engine mostram o painel ampliado; a segunda tela estava sem conteúdo nesses momentos. Como foram gravados e editados: [docs/obs-recording.md](docs/obs-recording.md) e Teste 12 do [diário](docs/experiment-log.md).
 
 ## O que este projeto é e o que não é
 
