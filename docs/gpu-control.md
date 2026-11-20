@@ -59,6 +59,7 @@ Campos: `schemaVersion`, `updatedAt`, `mode`, `distributionEnabled`, `primaryGpu
 ## Arquitetura futura proposta
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#1f1b26","primaryTextColor":"#f4f2ee","primaryBorderColor":"#ee1c25","lineColor":"#ee1c25","secondaryColor":"#2a2533","tertiaryColor":"#1a1720","clusterBkg":"#18151d","clusterBorder":"#77708a","edgeLabelBackground":"#14121a","fontFamily":"Segoe UI, Arial, sans-serif","actorBkg":"#1f1b26","actorBorder":"#ee1c25","actorTextColor":"#f4f2ee","actorLineColor":"#9a94a8","signalColor":"#ee1c25","signalTextColor":"#14121a","noteBkgColor":"#3a1418","noteTextColor":"#f4f2ee","noteBorderColor":"#ee1c25","labelBoxBkgColor":"#1f1b26","labelBoxBorderColor":"#ee1c25","labelTextColor":"#f4f2ee","loopTextColor":"#f4f2ee","activationBkgColor":"#3a1418"}}}%%
 flowchart TB
   UI[Interface] --> P[Política JSON + schema]
   P --> S["Scheduler determinístico<br/>(DRY RUN primeiro)"]
@@ -67,6 +68,14 @@ flowchart TB
   W0 --> V[Validação + telemetria]
   W1 --> V
   V -->|ACK / erro| P
+  classDef g970 fill:#3a2508,stroke:#ffa028,color:#ffd9a0,stroke-width:2px
+  classDef g750 fill:#0b2f33,stroke:#3cd2dc,color:#c8f6fa,stroke-width:2px
+  classDef eng fill:#3a1418,stroke:#ee1c25,color:#ffffff,stroke-width:2px
+  classDef data fill:#1f1b26,stroke:#9a94a8,color:#f4f2ee,stroke-width:1px
+  class UI,P data
+  class S,V eng
+  class W0 g970
+  class W1 g750
 ```
 
 Requisitos mínimos antes de execução real: schema JSON publicado e validado; scheduler que decida por critério medido (não por botão); seleção de GPU por DeviceId/LUID; DRY RUN sem submeter trabalho; ACK do Engine na política.
