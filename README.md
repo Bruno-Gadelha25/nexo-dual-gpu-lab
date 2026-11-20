@@ -11,6 +11,8 @@
 
 ![NEXO GPU CONTROL durante um job do Engine: as duas curvas de uso sobem juntas](docs/assets/video-engine-duas-placas.jpg)
 
+<p align="center"><a href="docs/assets/videos/nexo-dual-gpu-lab-motion.mp4"><img src="docs/assets/video-motion-capa.jpg" width="270" alt="Capa do vídeo de 1 minuto do NEXO DUAL GPU LAB"></a><br><b>🎬 <a href="docs/assets/videos/nexo-dual-gpu-lab-motion.mp4">Assista ao vídeo de 1 minuto</a></b>: o laboratório inteiro explicado, do "ganho de 50%" que era ilusão até a divisão 71/29.</p>
+
 *O painel NEXO GPU CONTROL durante um job do NEXO GPU ENGINE: a curva âmbar (GTX 970) e a ciano (GTX 750 Ti) sobem juntas para ~95%. Embaixo: "GTX970 71% + GTX750Ti 29% · 20,28 ms · principal sozinha 23,00 ms · 11,8% mais rápido · validação PASS".*
 
 ---
@@ -98,6 +100,8 @@ Achado prático: com as duas placas visíveis, o Ollama colocou o modelo pequeno
 
 ## Vídeos
 
+**Vídeo principal (1min05, vertical, narrado):** [nexo-dual-gpu-lab-motion.mp4](docs/assets/videos/nexo-dual-gpu-lab-motion.mp4). Conta a história do laboratório com os números deste README: o falso ganho de 50% (cópias PCIe), a GTX 750 Ti ~3x mais lenta, a divisão 71/29, 23,6 ms contra 20,3 ms e o Forza com a 750 Ti gravando. Narração sintética (voz Francisca, Microsoft).
+
 Clipes curtos (720p, ~15–18 s), gravados em 2026-11-19 com o painel NEXO GPU CONTROL e a tela do jogo. Clique para assistir no GitHub.
 
 | Clipe | O que mostra | Resultado na tela |
@@ -160,6 +164,10 @@ Em computação pura, medida neste PC, a **GTX 750 Ti é cerca de 3 vezes mais l
 
 ## Como as duas placas trabalham juntas
 
+<p align="center"><img src="docs/assets/como-as-placas-trabalham.png" width="900" alt="Infográfico: o painel grava a política, o NEXO GPU ENGINE encontra as placas pelo DeviceId, prepara cada uma, calibra (a GTX 750 Ti é cerca de 3 vezes mais lenta), divide cerca de 71/29, as duas calculam ao mesmo tempo, o processador valida todos os elementos e compara com a GTX 970 sozinha: 23,6 ms contra 20,3 ms"></p>
+
+<details><summary>Mesmo fluxo como diagrama editável (Mermaid)</summary>
+
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"primaryColor":"#1f1b26","primaryTextColor":"#f4f2ee","primaryBorderColor":"#ee1c25","lineColor":"#ee1c25","secondaryColor":"#2a2533","tertiaryColor":"#1a1720","clusterBkg":"#18151d","clusterBorder":"#77708a","edgeLabelBackground":"#14121a","fontFamily":"Segoe UI, Arial, sans-serif","actorBkg":"#1f1b26","actorBorder":"#ee1c25","actorTextColor":"#f4f2ee","actorLineColor":"#9a94a8","signalColor":"#ee1c25","signalTextColor":"#14121a","noteBkgColor":"#3a1418","noteTextColor":"#f4f2ee","noteBorderColor":"#ee1c25","labelBoxBkgColor":"#1f1b26","labelBoxBorderColor":"#ee1c25","labelTextColor":"#f4f2ee","loopTextColor":"#f4f2ee","activationBkgColor":"#3a1418"}}}%%
 flowchart LR
@@ -183,6 +191,8 @@ flowchart LR
   class Q0,R0 g970
   class Q1,R1 g750
 ```
+
+</details>
 
 Passo a passo:
 
