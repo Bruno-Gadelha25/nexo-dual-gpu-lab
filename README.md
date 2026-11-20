@@ -5,6 +5,10 @@
 > **Versão:** [`0.1.0-alpha.1`](VERSION) (mais o trabalho em andamento nos PRs) · **Estado:** laboratório experimental · **Repositório:** privado · **Licença:** ainda não escolhida (não redistribuir)
 > English summary: [README.en.md](README.en.md) · Índice de toda a documentação: [docs/index.md](docs/index.md) · Diário de todos os testes: [docs/experiment-log.md](docs/experiment-log.md)
 
+<p align="center"><img src="docs/assets/infografico-nexo-dual-gpu.png" width="640" alt="Infográfico do NEXO DUAL GPU LAB: job de cálculo em 57,9 ms só na GTX 750 Ti, 23,6 ms só na GTX 970 e 20,3 ms com as duas; Forza Horizon 4 com 85 e 86 FPS; lições dos testes"></p>
+
+![Gráfico de barras: só GTX 750 Ti 51,8 a 57,9 ms; só GTX 970 20,3 a 24,1 ms; as duas juntas 17,5 a 20,9 ms](docs/assets/grafico-engine.png)
+
 ![NEXO GPU CONTROL durante um job do Engine: as duas curvas de uso sobem juntas](docs/assets/video-engine-duas-placas.jpg)
 
 *O painel NEXO GPU CONTROL durante um job do NEXO GPU ENGINE: a curva âmbar (GTX 970) e a ciano (GTX 750 Ti) sobem juntas para ~95%. Embaixo: "GTX970 71% + GTX750Ti 29% · 20,28 ms · principal sozinha 23,00 ms · 11,8% mais rápido · validação PASS".*
