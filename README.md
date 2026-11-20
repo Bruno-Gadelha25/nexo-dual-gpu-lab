@@ -2,7 +2,7 @@
 
 **Duas placas de vídeo de gerações diferentes trabalhando juntas num PC de 2012**, programadas à mão em C++ com Direct3D 12, com cada resultado conferido elemento por elemento e cada teste registrado, inclusive os que falharam.
 
-> **Versão:** [`0.1.0-alpha.1`](VERSION) (mais o trabalho em andamento nos PRs) · **Estado:** laboratório experimental · **Repositório:** privado · **Licença:** ainda não escolhida (não redistribuir)
+> **Versão:** [`0.1.0-alpha.1`](VERSION) (mais o trabalho em andamento nos PRs) · **Estado:** laboratório experimental · **Repositório:** público · **Licença:** ainda não escolhida (não redistribuir)
 > English summary: [README.en.md](README.en.md) · Índice de toda a documentação: [docs/index.md](docs/index.md) · Diário de todos os testes: [docs/experiment-log.md](docs/experiment-log.md)
 
 <p align="center"><img src="docs/assets/infografico-nexo-dual-gpu.png" width="640" alt="Infográfico do NEXO DUAL GPU LAB: job de cálculo em 57,9 ms só na GTX 750 Ti, 23,6 ms só na GTX 970 e 20,3 ms com as duas; Forza Horizon 4 com 85 e 86 FPS; lições dos testes"></p>
@@ -411,7 +411,7 @@ O **NEXO AI COUNCIL** (ChatGPT, Gemini e Claude com um orquestrador determiníst
 
 ## Privacidade, dependências e licença
 
-- Repositório **privado**. Nenhuma credencial, hostname ou PID no histórico (auditado). Detalhes: [docs/privacy-review.md](docs/privacy-review.md).
+- Repositório **público** desde 20/11/2026. Nenhuma credencial, hostname ou PID no histórico (auditado de novo ao abrir o repositório). Detalhes: [docs/privacy-review.md](docs/privacy-review.md).
 - Dependências: Windows, Direct3D 12, Windows SDK, MSVC e driver NVIDIA, todos já instalados; nenhuma biblioteca de terceiros no código. [docs/dependencies-and-licenses.md](docs/dependencies-and-licenses.md).
 - Versões: [docs/VERSIONING.md](docs/VERSIONING.md), [CHANGELOG.md](CHANGELOG.md), [VERSION_HISTORY.md](VERSION_HISTORY.md).
 - Contribuição: [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -1,6 +1,6 @@
 # NEXO DUAL GPU LAB — English summary
 
-Private research lab on heterogeneous compute with **two different NVIDIA GPUs in one PC** (GTX 970 + GTX 750 Ti, Intel i7-3770K, Gigabyte Z77X-UP5 TH, Windows 11), using Direct3D 12, independent COMPUTE queues, Cross-Adapter resources and fences. The Portuguese [README.md](README.md) is the reference version; if the two disagree, the Portuguese one wins.
+Public research lab on heterogeneous compute with **two different NVIDIA GPUs in one PC** (GTX 970 + GTX 750 Ti, Intel i7-3770K, Gigabyte Z77X-UP5 TH, Windows 11), using Direct3D 12, independent COMPUTE queues, Cross-Adapter resources and fences. The Portuguese [README.md](README.md) is the reference version; if the two disagree, the Portuguese one wins.
 
 - **Version:** `0.1.0-alpha.1` (experimental alpha). **License:** not chosen yet; do not redistribute.
 - **Not** SLI, NVLink, unified VRAM or multi-GPU game rendering. **No** FPS gain has been shown.

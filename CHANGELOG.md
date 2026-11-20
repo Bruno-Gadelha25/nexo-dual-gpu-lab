@@ -4,6 +4,10 @@ All notable project changes are recorded here. Experimental measurements are app
 
 ## [Unreleased]
 
+### docs/repositorio-publico
+
+- **Changed:** repository is now public; README, README.en, CONTRIBUTING and the privacy review updated (old "private" lines in the privacy review kept as history, with a dated update and a fresh secret scan of the full history).
+
 ### feat/nexo-gpu-engine
 
 - **Added:** NEXO GPU ENGINE v0.1.0 (`phases/gpu-engine/`): consumes the GPU Control policy, calibrates each GPU, splits the NEXO job proportionally (~72/28), compares with the primary GPU alone (ABBA with untimed pre-roll) and validates every element. Valid sessions: 10.3–23.7% faster than the GTX 970 alone.
