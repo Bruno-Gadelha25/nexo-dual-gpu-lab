@@ -214,13 +214,7 @@ E cada placa sozinha, no mesmo job (Testes 10 e 12):
 | Só GTX 750 Ti | 51,8 a 57,9 ms |
 | As duas juntas (~71/29) | 17,5 a 20,9 ms |
 
-```mermaid
-xychart-beta
-  title "Job do NEXO, 8M elementos, 256 iterações (ms, menor é melhor)"
-  x-axis ["Só GTX 750 Ti", "Só GTX 970", "Duas placas"]
-  y-axis "ms" 0 --> 60
-  bar [53.1, 24.1, 20.3]
-```
+![Gráfico de barras: só GTX 750 Ti 51,8 a 57,9 ms; só GTX 970 20,3 a 24,1 ms; as duas juntas 17,5 a 20,9 ms](docs/assets/grafico-engine.png)
 
 O máximo teórico, somando as velocidades medidas, é ~25% de ganho. Os resultados ficam perto disso. A variação entre sessões (10% a 26%) vem principalmente do clock das placas, que sobe e desce sozinho.
 
