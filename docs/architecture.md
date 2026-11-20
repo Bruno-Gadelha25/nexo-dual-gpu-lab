@@ -7,15 +7,15 @@ Descreve o que o código das Fases 2 e 3 faz de fato (fontes em `phases/phase2-p
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"primaryColor":"#1f1b26","primaryTextColor":"#f4f2ee","primaryBorderColor":"#ee1c25","lineColor":"#ee1c25","secondaryColor":"#2a2533","tertiaryColor":"#1a1720","clusterBkg":"#18151d","clusterBorder":"#77708a","edgeLabelBackground":"#14121a","fontFamily":"Segoe UI, Arial, sans-serif","actorBkg":"#1f1b26","actorBorder":"#ee1c25","actorTextColor":"#f4f2ee","actorLineColor":"#9a94a8","signalColor":"#ee1c25","signalTextColor":"#14121a","noteBkgColor":"#3a1418","noteTextColor":"#f4f2ee","noteBorderColor":"#ee1c25","labelBoxBkgColor":"#1f1b26","labelBoxBorderColor":"#ee1c25","labelTextColor":"#f4f2ee","loopTextColor":"#f4f2ee","activationBkgColor":"#3a1418"}}}%%
 flowchart TB
-  subgraph Host["Processo nexo_dual_gpu.exe (CPU)"]
+  subgraph Host["Processo nexo_dual_gpu.exe (CPU)&nbsp;&nbsp;&nbsp;&nbsp;"]
     E["Enumeração DXGI<br/>VendorId 0x10DE"] --> G0["Gpu g0 = 1ª NVIDIA<br/>(tratada como GTX 970)"]
     E --> G1["Gpu g1 = 2ª NVIDIA<br/>(tratada como GTX 750 Ti)"]
     REF["Referência no CPU<br/>expected(index, seed, iters)"]
   end
-  subgraph D0["GTX 970"]
+  subgraph D0["GTX 970&nbsp;&nbsp;&nbsp;&nbsp;"]
     Q0["ID3D12Device + fila COMPUTE"] --> U0["UAV DEFAULT (VRAM)"] --> RB0["READBACK (RAM do sistema)"]
   end
-  subgraph D1["GTX 750 Ti"]
+  subgraph D1["GTX 750 Ti&nbsp;&nbsp;&nbsp;&nbsp;"]
     Q1["ID3D12Device + fila COMPUTE"] --> U1["UAV DEFAULT (VRAM)"] --> RB1["READBACK (RAM do sistema)"]
   end
   G0 --> Q0
@@ -54,7 +54,7 @@ sequenceDiagram
   Q->>GPU: shader (8 iterações por elemento)
   GPU->>RAM: cópia de 4×N bytes pelo PCIe
   GPU-->>CPU: fence concluído → evento
-  Note over CPU: t1 = qpc(); total_ms = t1 − t0
+  Note over CPU: t1 = qpc() · total_ms = t1 − t0
   CPU->>CPU: verify(): compara todos os elementos (fora do tempo)
 ```
 
