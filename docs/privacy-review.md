@@ -30,3 +30,9 @@ Detalhes em [audit/claude-audit-2026-11-19.md](audit/claude-audit-2026-11-19.md)
 - **Identificadores de hardware versionados:** VEN/DEV/SUBSYS/REV, bus PCI e LUIDs das GPUs nas evidências da Fase 1 e no relatório da Fase 2. Descrevem modelos comerciais e um estado temporário (LUID muda a cada reinicialização); risco baixo. Os IDs de **instância** PnP (`4&...`) aparecem só nos arquivos locais da Fase 4B e do GPU Control, que **não** foram importados.
 - **Antes de importar a Fase 4:** o monitor grava o hostname (`$env:COMPUTERNAME`) no relatório e uma lista de processos em `gpu-processes.csv`. Anonimizar hostname, nomes de processos de terceiros e PIDs numa cópia; manter o original fora do Git.
 - **Não versionar sem revisão de segurança:** `gpu-switcher.ps1`, que pode desabilitar uma GPU.
+
+## Atualização de 20/11/2026: repositório público
+
+- O proprietário tornou o repositório **público** em novembro de 2026. As linhas acima que falam em "privado" registram o estado da revisão original e foram mantidas como histórico.
+- Nova varredura de todo o histórico alcançável antes desta atualização: nenhum token (GitHub, AWS, OpenAI, Slack, Google), chave privada, string de conexão com senha, endereço Tailscale (`100.64.0.0/10`, `*.ts.net`), túnel público ou caminho de usuário encontrado.
+- Licença continua não escolhida: o código está visível, mas sem permissão de redistribuição até o proprietário escolher uma licença.

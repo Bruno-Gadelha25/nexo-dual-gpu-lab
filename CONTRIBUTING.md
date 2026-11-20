@@ -1,6 +1,6 @@
 # Como contribuir
 
-Repositório privado. Contribuições só com convite do proprietário.
+Repositório público. Issues e sugestões são bem-vindas; contribuições de código só com convite do proprietário.
 
 ## Regras do laboratório
 
