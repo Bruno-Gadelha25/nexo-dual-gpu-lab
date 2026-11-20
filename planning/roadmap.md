@@ -1,4 +1,4 @@
-﻿# Plano de continuidade
+# Plano de continuidade
 
 Atualizado em 2026-11-19 após a [auditoria independente](../docs/audit/claude-audit-2026-11-19.md).
 
@@ -19,6 +19,11 @@ Atualizado em 2026-11-19 após a [auditoria independente](../docs/audit/claude-a
 7. GPU Control → schema versionado → scheduler determinístico em DRY RUN → workers por GPU → execução real só com autorização.
 8. OBS: confirmar o NVENC por GPU antes de qualquer perfil.
 9. Testes unitários para a função de referência e para o parsing dos CSVs.
+
+## IA com duas placas
+
+- Medir lotes de embeddings divididos pela velocidade de cada placa (mesma lógica do Engine), com dados versionados.
+- Medir o FPS de um jogo gravando com o encoder na GTX 970 e na GTX 750 Ti, em várias rodadas.
 
 ## Governança
 

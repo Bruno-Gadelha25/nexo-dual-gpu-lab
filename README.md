@@ -15,6 +15,8 @@
 
 1. [Em uma frase](#em-uma-frase)
 2. [Resumo dos resultados](#resumo-dos-resultados)
+   - [Teve melhora ou não?](#teve-melhora-ou-não)
+   - [E com inteligência artificial?](#e-com-inteligência-artificial)
    - [Vídeos](#vídeos)
 3. [O que este projeto é e o que não é](#o-que-este-projeto-é-e-o-que-não-é)
 4. [O problema de pesquisa](#o-problema-de-pesquisa)
@@ -54,6 +56,31 @@ Num PC com uma GTX 970 e uma GTX 750 Ti, um programa próprio (o **NEXO GPU ENGI
 | Duas placas aumentam o FPS de jogos? | **Não.** Forza Horizon 4: 85 FPS só com a 970 e 86 FPS com as duas habilitadas. O jogo usa uma placa só, e aqui o limite é o processador. | [Teste com Forza](docs/fh4-test-2026-11-19.md) |
 | A segunda placa pode ajudar enquanto se joga? | **Sim, em outra função.** A GTX 970 roda o jogo e a GTX 750 Ti codifica a gravação do vídeo (encoder a 28%). | [Teste 12](docs/experiment-log.md) |
 | Dá para ver isso acontecendo? | **Sim.** O painel NEXO GPU CONTROL mostra ao vivo todas as métricas das duas placas e tem um botão que roda o Engine. | [GPU Control](docs/gpu-control.md) |
+
+## Teve melhora ou não?
+
+Resposta curta, sem rodeio:
+
+| Onde | Mudou? | Números | Leitura |
+|---|---|---|---|
+| **Cálculo feito por um programa preparado para isso** (NEXO GPU ENGINE) | **Sim, melhorou** | só a GTX 970: 23,6 ms → as duas: 20,3 ms. Ganho de **10% a 26%** conforme a rodada (média perto de **18%**) | ganho real, medido e validado. Modesto porque a GTX 750 Ti é ~3× mais fraca; o teto teórico com estas placas é ~25% |
+| **Jogos** (Forza Horizon 4) | **Não mudou nada** | 85 FPS só com a 970 e 86 FPS com as duas | o jogo usa uma placa só, e aqui quem limita é o processador |
+| **Jogar e gravar ao mesmo tempo** | **A segunda placa trabalha, mas o efeito no FPS ainda não foi medido** | encoder da 750 Ti a 28% enquanto a 970 roda o jogo; encoder da 970 em 0% | a divisão de funções acontece; falta comparar o FPS gravando com o encoder na 970 e na 750 Ti |
+| **"Ganho de 50%" da Fase 3** | **Era ilusão de medição** | sem a cópia de dados, as duas juntas foram 44% mais lentas | vinha das duas conexões PCIe copiando ao mesmo tempo, não de cálculo |
+
+Em uma frase: **duas placas ajudam programas feitos para dividir o trabalho (~18% aqui); jogos não ganham nada.**
+
+## E com inteligência artificial?
+
+IA é um caso muito mais favorável que jogos, porque o programa decide onde cada parte roda. Há três formas de usar duas placas, **ainda não medidas neste laboratório**:
+
+| Forma | Como funciona | O que se ganha | Cuidado |
+|---|---|---|---|
+| **Uma tarefa por placa** | ex.: o modelo de conversa na GTX 970; reconhecimento de voz e embeddings na GTX 750 Ti | as tarefas não disputam a mesma placa nem a mesma VRAM | é a forma mais simples e a mais estável |
+| **Dividir lotes de trabalho** (como o Engine) | um lote de embeddings ou de imagens dividido ~71/29 pela velocidade de cada placa | mais itens por segundo, na mesma lógica dos 10–26% medidos | só vale para trabalho que pode ser separado em pedaços independentes |
+| **Um modelo grande dividido entre as duas** | as camadas do modelo ficam parte na 970 e parte na 750 Ti | cabe um modelo maior do que 4 GB, sem usar a RAM do sistema | não fica mais rápido (as camadas rodam em sequência e conversam pelo PCIe) e a placa mais fraca pode virar gargalo |
+
+Observação de um projeto separado do autor (um assistente de voz local, fora deste repositório e sem dados versionados aqui): a primeira forma está em uso, com o modelo de conversa na GTX 970 e voz e embeddings na GTX 750 Ti. Uma tentativa da terceira forma, com um modelo de 8B dividido enquanto a voz também usava a 750 Ti, deixou a voz muito mais lenta, porque a placa lotou. Por isso a próxima campanha deste laboratório é medir a segunda forma (lotes divididos) com dados versionados.
 
 ## Vídeos
 
