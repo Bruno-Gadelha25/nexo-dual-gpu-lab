@@ -1,0 +1,4 @@
+18:44:35 inicio teste 970 so
+18:59:45 fim teste 970 so (resultado recebido)
+19:01:21 inicio teste duas placas
+19:03:41 fim teste duas placas (resultado recebido)
